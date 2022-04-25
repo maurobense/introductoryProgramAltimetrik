@@ -1,18 +1,16 @@
-git status 
 
-Shows the actual status of our repository.
+https://www.atlassian.com/git/tutorials/what-is-version-control
 
-git add
+https://www.atlassian.com/git/tutorials/what-is-git
 
-Takes a modified file in our working directory and places the modified version in a staging area. 
+https://blog.testproject.io/2021/03/22/git-commands-every-sdet-should-know/
 
-git commit -m
+https://linuxhint.com/use-git-tags/
 
-Takes everything from the staging area and makes permanent snapshot of the current state of our repository that is associated with a unique identifier.
+https://www.atlassian.com/git/tutorials/saving-changes/git-stash#how-git-stash-works
 
-git push
+https://www.atlassian.com/git/tutorials/git-hooks
 
-Allows us to send the commits from our local branch in our local Git repository. It is a must to ensure that all our changes to the local repository are commited.
 
 
 
