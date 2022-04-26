@@ -21,6 +21,8 @@ https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase
 
 https://www.youtube.com/watch?v=V5KrD7CmO4o&t=24s
 
+https://www.w3schools.com/js/js_string_methods.asp
+
 
 
 
