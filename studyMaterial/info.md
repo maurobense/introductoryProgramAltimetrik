@@ -15,6 +15,12 @@ https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
 
 https://www.varonis.com/blog/git-branching
 
+https://www.atlassian.com/git/tutorials/merging-vs-rebasing
+
+https://www.atlassian.com/git/tutorials/rewriting-history/git-rebase
+
+https://www.youtube.com/watch?v=V5KrD7CmO4o&t=24s
+
 
 
 
