@@ -13,6 +13,7 @@ https://www.atlassian.com/git/tutorials/git-hooks
 
 https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
 
+https://www.varonis.com/blog/git-branching
 
 
 
