@@ -11,6 +11,7 @@ https://www.atlassian.com/git/tutorials/saving-changes/git-stash#how-git-stash-w
 
 https://www.atlassian.com/git/tutorials/git-hooks
 
+https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell
 
 
 
