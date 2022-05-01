@@ -23,6 +23,17 @@ https://www.youtube.com/watch?v=V5KrD7CmO4o&t=24s
 
 https://www.w3schools.com/js/
 
+https://somospnt.com/blog/120-scope-en-javascript
+
+https://gabrieltanner.org/blog/javascript-dom-introduction
+
+https://mariechatfield.com/blog/html-vs-dom
+
+https://www.brightedge.com/glossary/are-meta-tags-important
+
+https://www.w3schools.com/html/html_form_input_types.asp
+
+
 
 
 
