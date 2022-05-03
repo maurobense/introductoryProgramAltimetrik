@@ -37,6 +37,15 @@ https://developer.mozilla.org/en-US/docs/Learn/HTML/Howto/Use_data_attributes
 
 https://www.semrush.com/blog/website-crawler/?kw=&cmp=LM_SRCH_DSA_Blog_Core_BU_EN&label=dsa_pagefeed&Network=g&Device=c&utm_content=554858858581&kwid=dsa-1439622781351&cmpid=11799892963&agpid=137318541068&BU=Core&extid=23624544427&adpos=&gclid=Cj0KCQjw37iTBhCWARIsACBt1Iyedk0MnUTdYZS3YLPkbEdt3hG7JFrvFd07cDzkMr-5SMul6lLu-2UaAuU1EALw_wcB
 
+https://www.w3.org/WAI/fundamentals/accessibility-intro/
+
+https://www.youtube.com/watch?v=3f31oufqFSM
+
+https://moz.com/learn/seo/what-is-seo
+
+https://www.w3schools.com/css/css_boxmodel.asp
+
+
 
 
 
