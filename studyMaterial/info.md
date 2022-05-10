@@ -49,6 +49,32 @@ https://www.w3schools.com/css/css_positioning.asp
 
 https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Introduction
 
+https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Flexbox
+
+https://developer.mozilla.org/en-US/docs/Learn/CSS/CSS_layout/Grids
+
+https://developer.mozilla.org/en/docs/Web/CSS/Media_Queries/Using_media_queries
+
+https://chiamakaikeanyi.dev/sizing-in-css-px-vs-em-vs-rem/
+
+https://raygun.com/blog/css-preprocessors-examples/
+
+https://picodotdev.github.io/blog-bitix/2021/01/las-metodologias-oocss-bem-y-smacss-para-organizar-los-estilos-css/
+
+https://www.techtarget.com/whatis/definition/bootstrap
+
+https://www.javatpoint.com/materialize-css-tutorial
+
+https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API
+
+https://www.w3schools.com/xml/ajax_intro.asp
+
+https://www.w3schools.com/xml/ajax_xmlhttprequest_create.asp
+
+
+
+
+
 
 
 
