@@ -22,11 +22,12 @@ input{
     
 }
 
-body{
+#body{
 
-    background: url(img/carousel.png)#C4C4C4;
+    background: url(img/carousel1.png)#C4C4C4;
     background-repeat: no-repeat;
     background-size: cover;
+    transition: 500ms;
 
 }
 
@@ -44,24 +45,22 @@ header{
 
 
 
-img{
+.logo{
     
-    width: 293px;
-    height: 37px;
+    width: 16,277rem;
+    height: 2.05rem;
     margin-left: 3rem;
     margin-bottom: 1.5rem;
     margin-top: 2.5rem;
 }
 
 main{
-    display: flex;
-}
-
-section {
+    width: 100%;
+    position: relative;
     display: flex;
     text-align: center;
-    
 }
+
 
 form{
     background-color:#f0f0f0;
@@ -69,7 +68,7 @@ form{
     position:absolute;
     padding: 50px;
     right: 0%;
-    margin-right: 100px;
+    margin-right: 6.7%;
     margin-top: 63px;
 }
 
@@ -88,26 +87,31 @@ h2{
 }
 
 .inp_usr{
-    width: 320px;
-    height: 47px;
+    width: 17.7rem;
+    height: 2.61rem;
     outline: none;
     border-radius: 4px;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 1.11rem;
+    padding-right: 1.11rem;
+    
 }
-input[type="password"]{
-    text-decoration: none;
+input[type="password"]:not(:placeholder-shown){
+    font-family: 'pass';
+    font-size: 2.6rem;
+    font-weight: 400;
+    color: #3D3D3D;   
 }
 
+
 ::placeholder{
-    font-size: 15px;
+    font-size: 0.83rem;
     font-weight: 400;
 }
 
 i{
     position: absolute;
     top: 25%;
-    right: 10px;
+    right: 0.55rem;
     color: #36B972;  
 }
 
@@ -120,8 +124,8 @@ label {
 }
 
 #chkbox{
-    width: 19px;
-    height: 19px;  
+    width: 1.05rem;
+    height: 1.05rem;  
     }
 .remember label{
     cursor: pointer;
@@ -175,8 +179,8 @@ input[type="submit"]{
     color: #FFFFFF;
     font-weight: 700;
     font-size: 1rem;
-    padding-top: 13px;
-    padding-bottom: 12px;
+    padding-top: 0.72rem;
+    padding-bottom: 0.66rem;
 }
 
 div{
@@ -187,8 +191,122 @@ div{
 
 .registered p{
     text-align: center;
-    font-size: 14px;
+    font-size: 0.77rem;
 
 }
+
+
+
+  .line {
+    position: relative;
+    z-index: 1;
+  }
+  .line:before {
+    border-top: 1px solid #515151;
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    z-index: -1;
+  }
+  .line span {
+  
+    background: #f0f0f0;;
+    padding: 0 20px;
+  }
+
+  footer{
+      width: 100%;
+      position: absolute;
+      bottom: 4%;
+      text-align: center;
+      display: flex;
+      justify-content: center;
+
+  }
+
+  footer ul li{
+      display: inline-block;
+
+  }
+
+  .slider{
+      
+     width: 120px;
+      
+  }
+
+  ul{
+      border-radius: 18px;
+      background-color: #E1E1E4;
+    
+  }
+
+  .slides{
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      margin-bottom: 2px;
+      background: #5151513f;
+    
+  }
+
+  #slide_1{
+    background: #515151;
+
+  }  
+
+  #right{
+    top: 50%;
+    right: 1.8%;
+}
+
+#left{
+    top: 50%;
+    left: 1.8%;
+}
+
+.arrow img{
+  position: fixed;
+  background-color: #FFFFFF;
+  border-radius: 50%;
+  opacity: 80%;
+  padding: 0.8rem;
+
+}
+
+.arrow img{
+    display: block;
+    margin: 0px auto;
+    width: 1.1rem;
+    height: 1.1rem;
+  }
+
+.sso{
+    border: 2px solid #4CC986 ;
+    border-radius: 6px;
+    padding-top: 0.72rem;
+    padding-bottom: 0.66rem;
+}
+
+
+.sso img{
+    position: absolute;
+    left: 15%;
+    width: 20px;
+    height: 20px;
+  }
+
+  .sso p {
+      font-weight: 700;
+      color:#36B972;
+  }
+
+
+
+
 
 

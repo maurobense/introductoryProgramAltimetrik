@@ -12,13 +12,14 @@
 
     <title>Login</title>
 </head>
-<body>
+<body id="body">
+  
     <header>
-            <img src="img/GAMEFINDER.png" alt="Game Finder Logo">
+            <img class="logo"src="img/GAMEFINDER.png" alt="Game Finder Logo">
     </header>
-    <main>
-        <section>
-
+    <div class="arrow"><img id="left" src="img/left.svg"></div>
+    <div class="arrow"><img id="right"src="img/right.svg"></div>
+        <main>
        <form>
             <h1>Welcome! Log in or register</h1>
             <h2>Log in to find games your're looking for!</h2>
@@ -40,13 +41,25 @@
             <div class="registered">
                 <p>Not registered yet? <a class="link1">Register now</a></p>
             </div>
-           
-        
+            <div><p class="line"><span>or</span></p>
+            </div>
+           <div class="sso"><p><span><img src="img/facebook.svg"></span>Login with Facebook</p></div>
+           <div class="sso"><p><span><img src="img/twitter.svg"></span>Login with Twitter</p></div>
+           <div class="sso"><p><span><img src="img/google.svg"></span>Login with Google</p></div>
           
        </form>
-    </section>
     </main>
 
+    <footer><div class="slider">
+        <ul>
+            <li class='slides'id="slide_1"></li>
+            <li class='slides'id="slide_2"></li>
+            <li class='slides'id="slide_3"></li>
+            <li class='slides'id="slide_4"></li>
+            <li class='slides'id="slide_5"></li>
+            <li class='slides'id="slide_6"></li>
+        </ul>
+    </div></footer>
    
     
     <script src="code.js"></script>
