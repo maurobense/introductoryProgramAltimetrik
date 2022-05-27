@@ -17,7 +17,11 @@ input {
     font-family: 'Exo', sans-serif;
     font-size: 18px;
     --text-color: #515151;
+    --form-background: #f0f0f0;
+    --slider-background: #E1E1E4;
+    --slides: #5151513f;
     color: var(--text-color);
+
 
 
 }
@@ -39,38 +43,38 @@ body {
     position: relative;
 }
 
-header {
+#headerLogin {
     background-color: rgba(255, 255, 255, 0.251);
     width: 100%;
-}
-
-
-
-.logo {
-
-    width: 16, 277rem;
-    height: 2.05rem;
-    margin-left: 3rem;
-    margin-bottom: 1.5rem;
-    margin-top: 2.5rem;
-}
-
-main {
-    width: 100%;
-    position: relative;
     display: flex;
+    position: relative;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 4%;
     text-align: center;
+    display: flex;
+    justify-content: center;
+
+}
+
+footer ul li {
+    display: inline-block;
+
 }
 
 
 form {
-    background-color: #f0f0f0;
+    background-color: var(--form-background);
     border-radius: 12px;
     position: absolute;
     padding: 2.77rem;
     right: 0%;
     margin-right: 6.7%;
     margin-top: 3.5rem;
+    transition: 500ms;
     /* margin : 0 auto para centrar  */
 }
 
@@ -87,6 +91,75 @@ h2 {
     font-weight: 400;
     margin-bottom: 1.7rem;
 }
+
+header svg {
+    fill: var(--text-color);
+    transition: 800ms;
+}
+
+main {
+    width: 100%;
+    position: relative;
+    display: flex;
+    text-align: center;
+}
+
+#darkMode,
+.switch,
+.switch div {
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+#darkMode {
+    position: absolute;
+    right: 6.7%;
+    top: 10%;
+}
+
+.switch {
+    width: 88px;
+    height: 44px;
+    border-radius: 23px;
+    background-color: #E1E1E4;
+    margin-left: 10px;
+    transition: 500ms;
+}
+
+.switch div {
+    width: 35px;
+    height: 35px;
+    background-color: #FFFFFF;
+    border-radius: 50%;
+    margin: 5px auto;
+    transition: 300ms;
+}
+
+.switch div p {
+    font-size: 10px;
+    font-weight: 500;
+    transition: 300ms;
+}
+
+#on p {
+    z-index: -1;
+}
+
+#off {
+    background-color: transparent;
+}
+
+.logo {
+
+    width: 16, 277rem;
+    height: 2.05rem;
+    margin-left: 3rem;
+    margin-bottom: 1.5rem;
+    margin-top: 2.5rem;
+}
+
 
 .inp_usr {
     width: 17.7rem;
@@ -175,8 +248,6 @@ a {
 
 }
 
-
-
 input[type="submit"] {
     background: #4CC986;
     width: 100%;
@@ -215,7 +286,7 @@ div {
 }
 
 .line:before {
-    border-top: 1px solid #515151;
+    border-top: 1px solid var(--text-color);
     content: "";
     position: absolute;
     top: 50%;
@@ -228,36 +299,19 @@ div {
 
 .line span {
 
-    background: #f0f0f0;
-    ;
+    background: var(--form-background);
     padding: 0 20px;
-}
-
-footer {
-    width: 100%;
-    position: absolute;
-    bottom: 4%;
-    text-align: center;
-    display: flex;
-    justify-content: center;
-
-}
-
-footer ul li {
-    display: inline-block;
+    transition: 500ms;
 
 }
 
 .slider {
-
     width: 120px;
-
 }
 
 ul {
     border-radius: 18px;
-    background-color: #E1E1E4;
-
+    background-color: var(--slider-background);
 }
 
 .slides {
@@ -265,12 +319,12 @@ ul {
     height: 7px;
     border-radius: 50%;
     margin-bottom: 2px;
-    background: #5151513f;
+    background: var(--slides);
 
 }
 
 #slide_1 {
-    background: #515151;
+    background: var(--text-color);
 
 }
 
@@ -284,40 +338,69 @@ ul {
     left: 1.8%;
 }
 
-.arrow{
-    position: fixed;
-}
 
-
-.arrow img {
+.arrow {
     display: block;
     margin: 0px auto;
     width: 1.1rem;
     height: 1.1rem;
-    position: fixed;
+    position: absolute;
     background-color: #E1E1E4;
     border-radius: 50%;
-    opacity: 80%;
     padding: 0.8rem;
+    z-index: 1;
 }
+
+.arrow img:hover {
+    opacity: 80%;
+}
+
 
 .sso {
     border: 2px solid #4CC986;
     border-radius: 6px;
     padding-top: 0.72rem;
     padding-bottom: 0.66rem;
+
 }
 
 
-.sso img {
+.sso svg {
     position: absolute;
     left: 15%;
     width: 20px;
     height: 20px;
+    fill: #36B972;
+
 
 }
 
 .sso p {
     font-weight: 700;
     color: #36B972;
+}
+
+@media (max-width: 768px) and (min-width: 322px) {
+
+    .logo{
+        margin-left: 0;
+    }
+
+    #headerLogin{
+        justify-content: center;
+    }
+
+    #darkMode{
+        position: absolute;
+        right: 40%;
+        top: 740%;
+        z-index: 1;
+    }
+    
+    form {
+        position: relative;
+        margin: 3.5rem auto;
+    }
+
+    
 }
