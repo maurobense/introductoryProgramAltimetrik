@@ -1,5 +1,5 @@
 let index = 1;
-let body = document.querySelector('#body');
+let body = document.querySelector('#loginScreen');
 let slider = document.querySelectorAll('.slides');
 let darkMode = false;
 let on = document.getElementById('on');
@@ -25,6 +25,7 @@ function switchDark(){
         document.documentElement.style.setProperty('--form-background', 'rgb(0 0 0 / 80%)');
         document.documentElement.style.setProperty('--slider-background', '#515151');
         document.documentElement.style.setProperty('--slides','#ffffff30')
+        document.documentElement.style.setProperty('--sso-color','#FFFFFF')
         
         bodyInjection();
         
@@ -41,6 +42,7 @@ function switchDark(){
         document.documentElement.style.setProperty('--form-background', '#F0F0F0');
         document.documentElement.style.setProperty('--slider-background', '#E1E1E4');
         document.documentElement.style.setProperty('--slides','#5151513f');
+        document.documentElement.style.setProperty('--sso-color','#36B972');
         head.style.backgroundColor = 'rgba(255, 255, 255, 0.251)';
 
 
@@ -105,4 +107,67 @@ function bodyInjection(){
     slideSelect.style.background = 'var(--text-color)';
 
     }
+}
+
+let myForm = document.getElementById('form');
+
+form.addEventListener('submit', function(e){
+    e.preventDefault();
+    myForm.reset();
+
+});
+
+
+document.getElementById('submit').onclick = function () {
+    const user = document.getElementById('usr_login').value;
+    const pass = document.getElementById('usr_pass').value;
+    try {
+        
+        var myHeaders = new Headers();
+        myHeaders.append("Content-Type", "application/json");
+        myHeaders.append("Content-Length","<calculated when request is sent>")
+
+        var raw = JSON.stringify({
+            "email": `${user}`,
+            "password": `${pass}`
+        });
+
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+    
+        };
+
+        fetch("http://localhost:3000/login", requestOptions)
+            .then(response => (response.ok) ? response.json() : response.text()
+            .then(text => Promise.reject(JSON.parse(text))))
+            .then(data => console.log("Login successfully!"))//jwt_decode(data.accessToken)))
+            .catch(error => console.log("Login rejected "))//error));
+    }
+    catch (e) {
+        console.log(e);
+    }
+}
+
+function handleCallBackResponse(response){
+    let data = jwt_decode(response.credential);
+    console.log(data);
+    
+} 
+
+window.onload = function(){
+        
+        google.accounts.id.initialize({
+        client_id: "435950673412-8327jkln308vp24otrs10l0dv8uae31e.apps.googleusercontent.com",
+        callback : handleCallBackResponse
+        
+});
+    google.accounts.id.renderButton(
+        document.getElementById('google'),
+        {theme:"custom",
+         size : "large",
+         width:"354"}
+    )
+
 }

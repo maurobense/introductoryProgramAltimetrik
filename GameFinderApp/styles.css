@@ -20,24 +20,27 @@ input {
     --form-background: #f0f0f0;
     --slider-background: #E1E1E4;
     --slides: #5151513f;
+    --sso-color: #36B972;
+    --main-background: #E5E5E5;
+    --article-background: #FFFFFF;
     color: var(--text-color);
 
 
 
 }
 
-#body {
+#loginScreen {
 
     background: url(img/carousel1.png)#C4C4C4;
     background-repeat: no-repeat;
     background-size: cover;
     transition: 500ms;
-
 }
 
 
 html,
-body {
+body,
+#loginScreen {
     width: 100%;
     height: 100%;
     position: relative;
@@ -52,8 +55,8 @@ body {
 
 footer {
     width: 100%;
-    position: absolute;
     bottom: 4%;
+    position: absolute;
     text-align: center;
     display: flex;
     justify-content: center;
@@ -70,7 +73,7 @@ form {
     background-color: var(--form-background);
     border-radius: 12px;
     position: absolute;
-    padding: 2.77rem;
+    padding: 2.22rem 2.77rem 1.22rem 2.77rem;
     right: 0%;
     margin-right: 6.7%;
     margin-top: 3.5rem;
@@ -92,9 +95,9 @@ h2 {
     margin-bottom: 1.7rem;
 }
 
-header svg {
+#loginScreen header svg {
     fill: var(--text-color);
-    transition: 800ms;
+    transition: 500ms;
 }
 
 main {
@@ -116,7 +119,7 @@ main {
 #darkMode {
     position: absolute;
     right: 6.7%;
-    top: 10%;
+    top: 35%;
 }
 
 .switch {
@@ -245,8 +248,8 @@ a {
 .link {
     position: absolute;
     right: 0%;
-
 }
+
 
 input[type="submit"] {
     background: #4CC986;
@@ -259,14 +262,14 @@ input[type="submit"] {
     padding-bottom: 0.66rem;
 }
 
-div {
+form div {
     margin-top: 1rem;
     margin-bottom: 1rem;
     position: relative;
 }
 
 .registered {
-    margin: 1rem 0;
+    margin-top: 1.77rem;
 }
 
 .or {
@@ -357,7 +360,7 @@ ul {
 
 
 .sso {
-    border: 2px solid #4CC986;
+    border: 2px solid var(--sso-color);
     border-radius: 6px;
     padding-top: 0.72rem;
     padding-bottom: 0.66rem;
@@ -370,37 +373,221 @@ ul {
     left: 15%;
     width: 20px;
     height: 20px;
-    fill: #36B972;
+    fill: var(--sso-color);
 
 
 }
 
 .sso p {
     font-weight: 700;
+    color: var(--sso-color);
+}
+
+#google {
+    position: absolute;
+    top: 10%;
+    left: 0;
+    opacity: 0%;
+    z-index: 1;
+}
+
+#loginScreen {
+    display: none;
+}
+
+#gameFinder{
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+
+}
+
+#gameFinder {
+    background: var(--main-background);
+    position: relative;
+   
+  
+}
+
+#headerFinder {
+    background: linear-gradient(180deg, #5FE19B 0%, #36B972 50%, #0EA152 100%);
+    display: flex;
+    position: relative;
+    width: 100%;
+    height: 5.22rem;
+    align-items: center;
+
+
+}
+
+#headerFinder svg {
+    fill: #FFFFFF;
+    margin-left: 2.22rem;
+}
+
+#games {
+    width: 100%;
+    text-align: left;
+    right: 0;
+    margin-right: 2.22rem;
+    position: relative;
+    justify-content: flex-end;
+   
+
+}
+
+#gridGames{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 24px;
+    margin-right: 2.22rem;
+    
+}
+article{
+    width: 363px;
+    height: 314px;
+    border-radius: 12px;
+    background-color: #FFFFFF;
+    box-shadow: 0px 0px 7px rgba(106, 106, 106, 0.25);
+
+}
+
+article img{
+    width: 100%;
+    height: 186px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+.img{
+    height: 186px;
+}
+.wrapper {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    row-gap: 10px;
+    margin: 15px 10px;
+
+}
+
+.wrapper div {
+    position: relative;
+}
+
+.wrapper div p {
+    font-size: 14px;
+    color: #939393;
+    font-weight: 500;
+}
+.one {
+    grid-column: 1 / 4;
+    grid-row: 1;
+    text-align: left;
+    align-items: center;
+
+}
+
+
+
+.one span {
+    position: absolute;
+    right: 0;
+    font-size: 18px;
+    top: 10%;
+}
+.one h3{
+    font-size: 24px;
+    font-weight: 700;
+}
+.one h3 span{
     color: #36B972;
 }
 
+.two {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.three {
+    grid-column: 2;
+    grid-row: 2;
+
+}
+
+.four {
+    grid-column: 3;
+    grid-row: 2 / 4;
+}
+
+.four p{
+    text-align: right;
+}
+
+.four p span{
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    margin-left: 16px;
+    
+}
+.four p span svg{
+    margin-bottom: 4px;
+}
+.five {
+    grid-column: 1;
+    grid-row: 3;
+}
+
+.six {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+
 @media (max-width: 768px) and (min-width: 322px) {
 
-    .logo{
+    footer {
+        bottom: 1.77rem;
+    }
+
+    .logo {
         margin-left: 0;
     }
 
-    #headerLogin{
+    #headerLogin {
         justify-content: center;
     }
 
-    #darkMode{
-        position: absolute;
-        right: 40%;
-        top: 740%;
-        z-index: 1;
-    }
-    
-    form {
-        position: relative;
-        margin: 3.5rem auto;
+    #dark {
+        color: #FFFFFF;
     }
 
-    
+    #on {
+        color: #515151;
+    }
+
+    #darkMode {
+        position: absolute;
+        right: 40%;
+        top: 800%;
+        z-index: 1;
+        background-color: #313159de;
+        padding: 10px;
+        border-radius: 25px;
+    }
+
+
+
+    form {
+        position: relative;
+        margin: 3.55rem auto;
+    }
+
+    article {
+        width: 19.5rem;
+    }
+
+
+
+
+   
 }

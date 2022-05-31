@@ -1,0 +1,15 @@
+{
+  "users": [
+    {
+      "email": "maurobense@gmail.com",
+      "password": "$2a$10$fhbN8h3GKknxlzbBcjvl5OqY5vQkXx61sKPx69hn4pTGJcELcKVAy",
+      "id": 1
+    },
+    {
+      "email": "mauro@gmail.com",
+      "password": "$2a$10$GtqeNhkp5Tk8ddj955.BHeUwCP39x7bqX4dWYwuaDcpB4Jj6b/s1y",
+      "img": "pic",
+      "id": 2
+    }
+  ]
+}
