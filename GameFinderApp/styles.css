@@ -24,9 +24,6 @@ input {
     --main-background: #E5E5E5;
     --article-background: #FFFFFF;
     color: var(--text-color);
-
-
-
 }
 
 #loginScreen {
@@ -34,26 +31,22 @@ input {
     background: url(img/carousel1.png)#C4C4C4;
     background-repeat: no-repeat;
     background-size: cover;
-    transition: 500ms;
 }
-
-
 html,
 body,
 #loginScreen {
     width: 100%;
     height: 100%;
     position: relative;
+    scroll-behavior: smooth;
 }
-
 #headerLogin {
     background-color: rgba(255, 255, 255, 0.251);
     width: 100%;
     display: flex;
     position: relative;
 }
-
-footer {
+#loginScreen footer {
     width: 100%;
     bottom: 4%;
     position: absolute;
@@ -62,13 +55,9 @@ footer {
     justify-content: center;
 
 }
-
 footer ul li {
     display: inline-block;
-
 }
-
-
 form {
     background-color: var(--form-background);
     border-radius: 12px;
@@ -77,11 +66,53 @@ form {
     right: 0%;
     margin-right: 6.7%;
     margin-top: 3.5rem;
-    transition: 500ms;
     /* margin : 0 auto para centrar  */
 }
 
-h1 {
+nav{
+    position: fixed;
+    top: 22.7%;    
+    left: 2.22rem;
+}
+
+nav ul{
+    background-color: transparent;
+    list-style: none;
+    margin-bottom: 2rem;
+    display: block;
+    width: 200px;
+
+}
+
+nav ul li{
+    margin: 0.38rem 0;
+}
+nav ul li h3{
+    margin: 3px 0;
+    font-weight: 700;
+    font-size: 20px;
+}
+nav ul li p{
+    margin: 3px 0;
+    font-weight: 400;
+    display: inline-block;
+    margin-left: 10px;
+    vertical-align: middle;
+}
+nav ul li span{
+    display: inline-block;
+    height: 18.5px;
+    vertical-align: middle;
+    align-items: center;
+    
+}
+nav ul li img{
+    width: 18.5px;
+}
+#home{
+    color: #36B972;
+}
+form h1 {
     font-size: 20px;
     font-weight: 700;
     font-style: normal;
@@ -89,7 +120,7 @@ h1 {
     margin-bottom: 0.5rem;
 }
 
-h2 {
+form h2 {
     font-size: 16px;
     font-weight: 400;
     margin-bottom: 1.7rem;
@@ -97,16 +128,13 @@ h2 {
 
 #loginScreen header svg {
     fill: var(--text-color);
-    transition: 500ms;
 }
-
 main {
     width: 100%;
     position: relative;
     display: flex;
     text-align: center;
 }
-
 #darkMode,
 .switch,
 .switch div {
@@ -117,9 +145,10 @@ main {
 }
 
 #darkMode {
-    position: absolute;
+    position: fixed;
     right: 6.7%;
-    top: 35%;
+    top: 4%;
+    z-index: 2;
 }
 
 .switch {
@@ -128,7 +157,6 @@ main {
     border-radius: 23px;
     background-color: #E1E1E4;
     margin-left: 10px;
-    transition: 500ms;
 }
 
 .switch div {
@@ -137,13 +165,11 @@ main {
     background-color: #FFFFFF;
     border-radius: 50%;
     margin: 5px auto;
-    transition: 300ms;
 }
 
 .switch div p {
     font-size: 10px;
     font-weight: 500;
-    transition: 300ms;
 }
 
 #on p {
@@ -240,9 +266,6 @@ a {
     font-size: 14px;
     color: #36B972;
     text-decoration: none;
-
-
-
 }
 
 .link {
@@ -304,7 +327,6 @@ form div {
 
     background: var(--form-background);
     padding: 0 20px;
-    transition: 500ms;
 
 }
 
@@ -348,14 +370,11 @@ ul {
     width: 1.1rem;
     height: 1.1rem;
     position: absolute;
-    background-color: #E1E1E4;
+    background-color: var(--slider-background);
     border-radius: 50%;
     padding: 0.8rem;
     z-index: 1;
-}
-
-.arrow img:hover {
-    opacity: 80%;
+    fill: var(--text-color);
 }
 
 
@@ -383,57 +402,58 @@ ul {
     color: var(--sso-color);
 }
 
-#google {
-    position: absolute;
-    top: 10%;
-    left: 0;
-    opacity: 0%;
-    z-index: 1;
-}
 
 #loginScreen {
-    display: none;
+    display: none ;
 }
+
+
 
 #gameFinder{
-    display: flex;
-    flex-direction: column;
     min-height: 100%;
-
-}
-
-#gameFinder {
     background: var(--main-background);
-    position: relative;
-   
-  
 }
+
 
 #headerFinder {
     background: linear-gradient(180deg, #5FE19B 0%, #36B972 50%, #0EA152 100%);
     display: flex;
-    position: relative;
+    position: sticky;
+    top: 0;
     width: 100%;
     height: 5.22rem;
     align-items: center;
-
-
+    z-index: 1;
 }
 
 #headerFinder svg {
     fill: #FFFFFF;
     margin-left: 2.22rem;
 }
+.heading{
+    padding-top: 1.1rem;
+    padding-bottom: 1.72rem;;
+    margin-left: 2.22rem;
+    position: sticky;
+    top: 93px;
+    z-index: 1;
+    background-color:var(--main-background);
+    ;
+}
+
+.heading h1{
+    font-size: 2.66rem;
+    font-weight: 800;
+}
+.heading h4{
+    font-weight: 400;
+}
 
 #games {
     width: 100%;
     text-align: left;
-    right: 0;
-    margin-right: 2.22rem;
     position: relative;
     justify-content: flex-end;
-   
-
 }
 
 #gridGames{
@@ -449,7 +469,6 @@ article{
     border-radius: 12px;
     background-color: #FFFFFF;
     box-shadow: 0px 0px 7px rgba(106, 106, 106, 0.25);
-
 }
 
 article img{
@@ -465,16 +484,17 @@ article img{
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     row-gap: 10px;
-    margin: 15px 10px;
+    margin: 10px 16px;
 
 }
 
 .wrapper div {
     position: relative;
 }
-
-.wrapper div p {
+.wrapper div p{
     font-size: 14px;
+}
+.two, .five{
     color: #939393;
     font-weight: 500;
 }
@@ -483,10 +503,7 @@ article img{
     grid-row: 1;
     text-align: left;
     align-items: center;
-
 }
-
-
 
 .one span {
     position: absolute;
@@ -510,18 +527,14 @@ article img{
 .three {
     grid-column: 2;
     grid-row: 2;
-
 }
-
 .four {
     grid-column: 3;
     grid-row: 2 / 4;
 }
-
 .four p{
     text-align: right;
 }
-
 .four p span{
     width: 20px;
     height: 20px;
@@ -541,16 +554,33 @@ article img{
     grid-column: 2;
     grid-row: 3;
 }
+#gameFinder footer{
+    width: 100%;
+    height: 108px;
+    position: fixed;
+    bottom: 0;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #F0F0F0 100%);
 
+    
+}
 
 @media (max-width: 768px) and (min-width: 322px) {
 
-    footer {
-        bottom: 1.77rem;
+
+    #games{
+        justify-content: center;
     }
 
+    #gridGames{
+        grid-template-columns: repeat(2,1fr);
+        margin: 0;
+    }
     .logo {
         margin-left: 0;
+    }
+
+    #loginScreen footer {
+        bottom: 1.77rem;
     }
 
     #headerLogin {
@@ -575,8 +605,7 @@ article img{
         border-radius: 25px;
     }
 
-
-
+  
     form {
         position: relative;
         margin: 3.55rem auto;
