@@ -10,6 +10,27 @@
       "password": "$2a$10$GtqeNhkp5Tk8ddj955.BHeUwCP39x7bqX4dWYwuaDcpB4Jj6b/s1y",
       "img": "pic",
       "id": 2
+    },
+    {
+      "email": "luis@gmail.com",
+      "password": "$2a$10$OPX/B35NW10xsQf5Rz0V0u.B7LEmuvmmp4eX0E8znh70DerxiIIG.",
+      "username": "Luis",
+      "img": "pic",
+      "id": 3
+    },
+    {
+      "email": "homer@gmail.com",
+      "password": "$2a$10$VjZO4tsJRpltelqZ6MyG0OKH3bjRH4KFwXmUmntspbhwR6EPXRXIm",
+      "username": "Homer",
+      "img": "https://pyxis.nymag.com/v1/imgs/a22/179/b205a78510315d932427143ad6b6fb5694-03-homer-simpson-doughnuts.rsquare.w700.jpg",
+      "id": 4
+    },
+    {
+      "email": "bart@gmail.com",
+      "password": "$2a$10$BYYGba6KnZ0zASZKVf8XaOXYl9vIIH1Y16Q00MdEB0jybu2QV6Pu.",
+      "username": "Bart",
+      "img": "https://i1.sndcdn.com/avatars-000413713293-s6lgo1-t500x500.jpg",
+      "id": 5
     }
   ]
 }
