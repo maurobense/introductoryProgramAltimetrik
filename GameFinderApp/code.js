@@ -20,6 +20,7 @@ let key;
 
 
 
+
 function switchDark() {
     if (!darkMode) {
         index = 1;
@@ -135,6 +136,7 @@ function loginRequest() {
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
+
     var raw = JSON.stringify({
         "email": `${user}`,
         "password": `${pass}`
@@ -148,9 +150,14 @@ function loginRequest() {
     };
 
     fetch("http://localhost:3000/login", requestOptions)
-        .then(response => (response.ok) ? response.json() : response.text())
-        .then(data => login(data))//jwt_decode(data.accessToken)))
-        .catch(error => console.log(error))
+        .then(response => {
+            if (!response.ok) { throw response }
+            return response.json()
+        })
+        .then(response => login(response))
+        .catch(error => {
+            error.text().then(error => console.log(JSON.parse(error)))
+        })
 
 }
 
@@ -165,48 +172,67 @@ function login(data) {
         localStorage.setItem('username', data.user.username)
         localStorage.setItem('pic', data.user.img)
     }
+
+
     if (jwt_decode(data.accessToken).sub == data.user.id) {
         key = "e86fafc42b07483884668b87aafd6e9d"
+        console.log(data);
+        console.log('Game Finder API: ' + key);
+        myForm.reset();
+        login_screen.style.display = 'none';
+        game_finder.style.display = 'block';
+        loadGames();
     }
-    console.log(data);
-    console.log('Game Finder API: ' + key);
-    myForm.reset();
-    login_screen.style.display = 'none';
-    game_finder.style.display = 'block';
-    loadGames();
 }
+
+window.onscroll = function () {
+
+    console.log(scrollY + innerHeight, game_finder.offsetHeight)
+   
+    if (game_finder.offsetHeight == scrollY + innerHeight) {
+        n++;
+        loadGames();
+    }
+};
+
 let grid = document.getElementById('gridGames');
 let myGames = [];
 let n = 1;
 let c = 0;
 function callbackGames(games) {
     console.log(games);
-    for (let i = 0; i < games.length; i++) {
+    for (let i = 0; i < games.results.length; i++) {
+        myGames.push(games.results[i]);
+        var date = new Date(`${games.results[i].released}`);
+        var options = { year: 'numeric', month: 'long', day: 'numeric' };
         c++;
         let plat = "";
         let gen = "";
-        for (let f = 0; f < games[i].genres.length; f++) {
-            if (f == games[i].genres.length - 1) {
-                gen += `${games[i].genres[f].name}`
+        for (let f = 0; f < games.results[i].genres.length; f++) {
+            if (f == games.results[i].genres.length - 1) {
+                gen += `${games.results[i].genres[f].name}`
             } else {
-                gen += `${games[i].genres[f].name}, `
+                gen += `${games.results[i].genres[f].name}, `
             }
 
         }
 
-        myGames.push(games[i]);
-        grid.innerHTML += ` <article class="card">
-        <div class="img"><img src="${games[i].background_image}">
+        for (let r = 0; r < games.results[i].parent_platforms.length; r++) {
+            let myPlat = assign_icon(games.results[i].parent_platforms[r].platform.name);
+            plat += myPlat;
+        }
+        grid.innerHTML += ` <article class="card" id="art_${i}">
+        <div class="img"><img src="${games.results[i].background_image}">
         </div>
         <div class="wrapper">
             <div class="one">
-                <h3 class="title">${games[i].name}<span id="pos">#${c}</span></h3>
+                <h3 class="title">${games.results[i].name}<span id="pos">#${c}</span></h3>
             </div>
             <div class="two">
                 <p>Release date:</p>
             </div>
             <div class="three">
-                <p>${games[i].released}</p>
+                <p>${date.toLocaleDateString("en-EN", options)}</p>
             </div>
             <div class="four">
                 <p>${plat}</p>
@@ -221,14 +247,40 @@ function callbackGames(games) {
     </article>
     `
     }
-    while (n < 5) {
-        n++;
-        loadGames();
-    }
 
 }
+
+function assign_icon(plat) {
+    switch (plat) {
+        case 'PlayStation':
+            return `<span><svg width="24" height="20" viewBox="0 0 24 20"  xmlns="http://www.w3.org/2000/svg">
+        <path d="M9.55176 9.53674e-06L9.55176 18.2774L13.3605 19.5885L13.3605 4.26319C13.3605 3.54103 13.6568 3.06155 14.1321 3.22645C14.7535 3.41372 14.8743 4.07895 14.8743 4.79307L14.8743 10.9138C17.245 12.1606 19.1115 10.9131 19.1115 7.62345C19.1115 4.26188 18.0172 2.76435 14.7973 1.56033C13.5273 1.10084 11.1735 0.325457 9.55176 9.53674e-06Z" />
+        <path d="M14.3506 16.913L20.1079 14.3203C20.7592 14.0149 20.8587 13.5999 20.3316 13.3818C19.7962 13.1596 18.8406 13.2232 18.1824 13.5222L14.3506 15.2325V12.5037L14.57 12.412C14.57 12.412 15.6792 11.9149 17.2392 11.7008C18.7962 11.4849 20.7057 11.7289 22.2065 12.4446C23.8971 13.1242 24.0866 14.1153 23.6589 14.8051C23.2249 15.4877 22.1728 15.9815 22.1728 15.9815L14.3506 19.5368"/>
+        <path d="M1.7099 17.2146C-0.0868735 16.6443 -0.386499 15.4394 0.433179 14.7434C1.18926 14.1079 2.47691 13.6294 2.47691 13.6294L7.79974 11.4674V13.9281L3.97289 15.4908C3.29503 15.767 3.1934 16.1557 3.73939 16.359C4.29514 16.5706 5.28141 16.5137 5.95966 16.2286L7.79974 15.4728V17.6694C7.68114 17.6921 7.54927 17.715 7.42892 17.7383C5.5943 18.0852 3.63971 17.9428 1.7099 17.2146Z" />
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M23.7661 19.4589C23.6149 19.6145 23.4164 19.7025 23.2027 19.7025C22.989 19.7025 22.784 19.6145 22.6326 19.4589C22.4831 19.3005 22.4004 19.0937 22.4004 18.8707C22.4004 18.4089 22.7591 18.0358 23.2027 18.0358C23.4164 18.0358 23.6149 18.1209 23.7661 18.2799C23.9156 18.4353 24 18.6457 24 18.8707C24 19.0937 23.9156 19.3005 23.7661 19.4589ZM22.5352 18.8707C22.5352 18.6809 22.6033 18.5067 22.7279 18.3777C22.8555 18.2458 23.0258 18.1748 23.2027 18.1748C23.3798 18.1748 23.5458 18.2458 23.6703 18.3777C23.7959 18.5067 23.8638 18.6809 23.8638 18.8707C23.8638 19.2511 23.567 19.5599 23.2027 19.5599C23.0258 19.5599 22.8555 19.4896 22.7279 19.3594C22.6033 19.2281 22.5352 19.0559 22.5352 18.8707ZM23.5677 19.2169C23.5748 19.2384 23.5835 19.2511 23.5958 19.2549L23.607 19.2614V19.3144H23.4334L23.4302 19.3037L23.4184 19.2717C23.4164 19.2549 23.4141 19.2328 23.4117 19.1958L23.404 19.0508C23.402 18.9994 23.3859 18.9695 23.3561 18.9496C23.334 18.942 23.3039 18.936 23.259 18.936H23.018V19.3144H22.8599V18.385H23.2745C23.3421 18.385 23.399 18.3975 23.4426 18.4168C23.53 18.4596 23.5748 18.5369 23.5748 18.6455C23.5748 18.6988 23.5621 18.7488 23.5402 18.7856C23.5212 18.8116 23.4988 18.8354 23.4744 18.8586L23.4809 18.8633C23.4974 18.8754 23.5138 18.8874 23.5235 18.9051C23.5456 18.9306 23.5556 18.9732 23.5574 19.028L23.5614 19.1464C23.5621 19.1767 23.5644 19.2003 23.5677 19.2169ZM23.3807 18.76C23.4063 18.7428 23.4184 18.7086 23.4184 18.6562C23.4184 18.601 23.4001 18.5642 23.3642 18.5458C23.3421 18.5369 23.3146 18.5303 23.2779 18.5303H23.018V18.7914H23.2635C23.3123 18.7914 23.3511 18.7809 23.3807 18.76Z"/>
+        </svg></span>`;
+        case 'Xbox':
+            return `<span><svg width="20" height="20" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10 0C11.9286 0 13.5238 0.616246 14.9762 1.65266C15 1.65266 15 1.68067 15 1.70868C15 1.73669 14.9762 1.73669 14.9524 1.73669C13.0952 1.2605 10.2857 3.13725 10.0238 3.33333H10H9.97619C9.71429 3.13725 6.90476 1.2605 5.04762 1.73669C5.02381 1.73669 5 1.73669 5 1.70868C5 1.68067 5 1.65266 5.02381 1.65266C6.47619 0.616246 8.07143 0 10 0ZM16.3903 17.5988C17.8903 16.0464 12.9308 10.5648 10.0035 8.33333C10.0035 8.33333 9.97935 8.33333 9.97935 8.35759C7.07626 10.5648 2.09261 16.0464 3.61674 17.5988C5.31021 19.1026 7.56011 20 10.0035 20C12.447 20 14.6727 19.1026 16.3903 17.5988ZM2.73973 3.38078C2.72831 3.38078 2.7226 3.38705 2.7169 3.39332C2.71119 3.39959 2.70548 3.40585 2.69406 3.40585C1.0274 5.2358 0 7.76763 0 10.5501C0 12.8313 0.707763 14.9621 1.87215 16.6416C1.87215 16.6667 1.89498 16.6667 1.91781 16.6667C1.94064 16.6667 1.94064 16.6416 1.91781 16.6165C1.21005 14.2351 4.79452 8.4946 6.64384 6.0881L6.66667 6.06303C6.66667 6.03796 6.66667 6.03796 6.64384 6.03796C3.83562 2.9797 2.89954 3.30558 2.73973 3.38078ZM13.3333 6.05268L13.3562 6.02759C16.1644 2.99144 17.1005 3.31764 17.2374 3.36782C17.2469 3.36782 17.2525 3.36782 17.2574 3.36962C17.2642 3.37215 17.2698 3.37825 17.2831 3.39291C18.9726 5.22464 20 7.75895 20 10.5442C20 12.8276 19.2922 14.9604 18.1279 16.6416C18.1279 16.6667 18.105 16.6667 18.0822 16.6667V16.6165C18.7671 14.2327 15.2055 8.48662 13.3562 6.07777C13.3333 6.07777 13.3333 6.05268 13.3333 6.05268Z"/>
+        </svg></span>`;
+
+        case 'PC':
+            return `<span><svg width="20" height="20" viewBox="0 0 20 20"  xmlns="http://www.w3.org/2000/svg">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M20 9.16667H9.16667V1.53647L20 0V9.16667ZM8.33333 1.66667V9.16667H0V2.77865L8.33333 1.66667ZM8.33333 10H0V17.0992L8.33333 18.3333V10ZM9.16667 18.3262V10H20V20L9.16667 18.3262Z"/>
+        </svg></span>`;
+
+        case 'Nintendo':
+            return `<span><svg width="24" height="24" viewBox="0 0 24 24"  xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M17.8608 24H14.1696C14.0755 24 14.0001 23.9245 14.0001 23.8302V0.150943C14.0001 0.0754717 14.0566 0 14.1508 0H17.8608C21.2506 0 24.0001 2.75472 24.0001 6.15094V17.8491C24.0001 21.2453 21.2506 24 17.8608 24ZM21.1564 13.2076C21.1564 11.8679 20.0641 10.7736 18.727 10.7736C17.3899 10.7736 16.3165 11.8679 16.2976 13.2076C16.2976 14.5472 17.3899 15.6415 18.727 15.6415C20.0641 15.6415 21.1564 14.5472 21.1564 13.2076Z" />
+            <path d="M3.99988 8C3.99988 9.1 4.89988 10 5.99988 10C7.09988 10 7.99988 9.1 7.99988 8C7.99988 6.9 7.09988 6 5.99988 6C4.88321 6 3.99988 6.88333 3.99988 8Z" />
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M6.38173 0H11.8238C11.9217 0 12 0.0754717 12 0.169811V23.8302C12 23.9245 11.9217 24 11.8238 24H6.38173C2.85807 24 0 21.2453 0 17.8491V6.15094C0 2.75472 2.85807 0 6.38173 0ZM6.38169 22.0755H10.0032V1.92458H6.38169C5.20714 1.92458 4.11089 2.37741 3.2887 3.16986C2.44694 3.96232 1.99669 5.01892 1.99669 6.15099V17.8491C1.99669 18.9812 2.46652 20.0378 3.2887 20.8302C4.11089 21.6416 5.20714 22.0755 6.38169 22.0755Z" />
+            </svg></span>`;
+        default: return '';
+
+    }
+}
 function loadGames() {
-    setTimeout(function(){
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
@@ -237,15 +289,14 @@ function loadGames() {
         headers: myHeaders,
 
     };
-    
+
     fetch(`https://api.rawg.io/api/games?=&key=${key}&page=${n}`, requestOptions)
         .then(response => (response.ok) ? response.json() : response.text())
-        .then(data => callbackGames(data.results))
+        .then(data => callbackGames(data))
         .catch(error => console.log(error))
-    },500);
+
 }
 window.onload = function () {
-
 
     if (localStorage.jwt != undefined) {
         let token = localStorage.getItem('jwt');
@@ -255,7 +306,7 @@ window.onload = function () {
         }
     }
 
-    if(key != undefined){
+    if (key != undefined) {
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
         loadGames();
