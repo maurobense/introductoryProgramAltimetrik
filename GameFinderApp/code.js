@@ -1,7 +1,8 @@
 document.getElementById('right').addEventListener('click', rightArrow);
 document.getElementById('left').addEventListener('click', leftArrow)
 document.getElementById('darkMode').addEventListener('click', switchDark);
-document.getElementById('submit').addEventListener('click', loginRequest)
+document.getElementById('submit').addEventListener('click', loginRequest);
+
 
 
 
@@ -16,6 +17,7 @@ let head = document.getElementById('headerLogin')
 let login_screen = document.getElementById('loginScreen');
 let game_finder = document.getElementById('gameFinder');
 let key;
+let likes;
 
 
 
@@ -66,6 +68,7 @@ function switchDark() {
         bodyInjection();
     }
 }
+
 
 document.getElementById('eye').onclick = function () {
     let icon = document.getElementById('icon');
@@ -188,7 +191,7 @@ function login(data) {
 window.onscroll = function () {
 
     console.log(scrollY + innerHeight, game_finder.offsetHeight)
-   
+
     if (game_finder.offsetHeight == scrollY + innerHeight) {
         n++;
         loadGames();
@@ -221,8 +224,16 @@ function callbackGames(games) {
             let myPlat = assign_icon(games.results[i].parent_platforms[r].platform.name);
             plat += myPlat;
         }
-        grid.innerHTML += ` <article class="card" id="art_${i}">
-        <div class="img"><img src="${games.results[i].background_image}">
+        grid.innerHTML += ` <article class="card" id="art_${c}">
+        <div class="img"><img src="${games.results[i].background_image}"><span><svg data-liked="false" class="like" id="like_${c}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <mask id="path-1-outside-1_12_2251" maskUnits="userSpaceOnUse" x="3" y="3" width="18" height="17" fill="#FFFFFF">
+        <rect fill="white" x="3" y="3" width="18" height="17"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z"/>
+        </mask>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z" />
+        <path d="M12 5.659L11.225 6.29099L12 7.24137L12.775 6.29095L12 5.659ZM10.4373 4.43445L10.0089 5.33807L10.4373 4.43445ZM17.273 14.511L18.0323 15.1618L18.0324 15.1616L17.273 14.511ZM12.614 18.789L13.228 19.5783L13.2282 19.5782L12.614 18.789ZM11.386 18.789L10.7718 19.5782L10.772 19.5783L11.386 18.789ZM6.727 14.511L7.48647 13.8605L7.48638 13.8604L6.727 14.511ZM8.5 4V5.00001L8.50142 5L8.5 4ZM12.775 5.02702C12.2576 4.39259 11.6053 3.88146 10.8656 3.53082L10.0089 5.33807C10.4801 5.56139 10.8955 5.88693 11.225 6.29099L12.775 5.02702ZM15.5 3C13.7788 3 12.2341 3.78953 11.225 5.02706L12.775 6.29095C13.4179 5.50248 14.4012 5 15.5 5V3ZM21 8.467C21 5.42801 18.5185 3 15.5 3V5C17.4335 5 19 6.552 19 8.467H21ZM18.0324 15.1616C19.5402 13.4019 21 11.0817 21 8.467H19C19 10.3543 17.9258 12.2121 16.5136 13.8604L18.0324 15.1616ZM13.2282 19.5782C14.601 18.5098 16.483 16.9694 18.0323 15.1618L16.5137 13.8602C15.101 15.5086 13.351 16.9482 11.9998 17.9998L13.2282 19.5782ZM12 19.9997C12.4448 19.9997 12.8769 19.8514 13.228 19.5783L12 17.9997L12 17.9997V19.9997ZM10.772 19.5783C11.1231 19.8514 11.5552 19.9997 12 19.9997V17.9997V17.9997L10.772 19.5783ZM5.96753 15.1615C7.517 16.9705 9.39929 18.51 10.7718 19.5782L12.0002 17.9998C10.6487 16.948 8.899 15.5095 7.48647 13.8605L5.96753 15.1615ZM3 8.467C3 11.0817 4.45985 13.4019 5.96762 15.1616L7.48638 13.8604C6.07415 12.2121 5 10.3543 5 8.467H3ZM8.5 3C5.48147 3 3 5.42801 3 8.467H5C5 6.552 6.56653 5 8.5 5V3ZM10.8656 3.53082C10.1258 3.18018 9.31722 2.99884 8.49858 3.00001L8.50142 5C9.0228 4.99926 9.5378 5.11476 10.0089 5.33807L10.8656 3.53082Z" fill="#FFFFFF" mask="url(#path-1-outside-1_12_2251)"/>
+        </svg>
+        </span>
         </div>
         <div class="wrapper">
             <div class="one">
@@ -248,7 +259,29 @@ function callbackGames(games) {
     `
     }
 
+    like_it();
+
+
 }
+function like_it() {
+    likes = document.querySelectorAll('.like');
+    for (let like of likes) {
+        let mylike = document.querySelector(`#${like.id}`);
+        mylike.addEventListener('click', function(){
+            if(like.dataset.liked == "false"){
+                like.dataset.liked = 'true';
+                like.style.fill = '#FFFFFF'
+            }else{
+                like.dataset.liked = 'false';
+                like.style.fill = 'none';
+            }
+        });
+        
+    } 
+
+}
+
+
 
 function assign_icon(plat) {
     switch (plat) {
