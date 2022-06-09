@@ -31,6 +31,13 @@
       "username": "Bart",
       "img": "https://i1.sndcdn.com/avatars-000413713293-s6lgo1-t500x500.jpg",
       "id": 5
+    },
+    {
+      "email": "pepito@gmail.com",
+      "password": "$2a$10$IJW/Y.TcA3m/48gfSh0HYufkeRS7tmra9f0f1DkfkhA8f7lRjMZ/q",
+      "username": "Pepito",
+      "img": "https://i1.sndcdn.com/avatars-000413713293-s6lgo1-t500x500.jpg",
+      "id": 6
     }
   ]
 }

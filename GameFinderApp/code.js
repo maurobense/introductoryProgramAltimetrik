@@ -3,23 +3,39 @@ document.getElementById('left').addEventListener('click', leftArrow)
 document.getElementById('darkMode').addEventListener('click', switchDark);
 document.getElementById('submit').addEventListener('click', loginRequest);
 
-
-
-
 let index = 1;
 let body = document.querySelector('#loginScreen');
 let slider = document.querySelectorAll('.slides');
 let darkMode = false;
+let searching = false;
 let on = document.querySelector('#on');
 let off = document.querySelector('#off');
 let sw = document.querySelector('.switch');
 let head = document.getElementById('headerLogin')
 let login_screen = document.getElementById('loginScreen');
 let game_finder = document.getElementById('gameFinder');
+let layer = document.getElementById('layer');
+let inp_search = document.getElementById('inp_search');
+let find = document.getElementById('find');
 let key;
 let likes;
+let s = 1;
 
+inp_search.addEventListener('focusin', function(){
+    layer.style.display = 'block'
+});
 
+inp_search.addEventListener('focusout', function(){
+    layer.style.display = 'none';
+});
+
+find.addEventListener('click', function(){
+    searching = true;
+    s = 1;
+    c = 0;
+    grid.innerHTML = '';
+    searchGames();
+});
 
 
 
@@ -178,7 +194,7 @@ function login(data) {
 
 
     if (jwt_decode(data.accessToken).sub == data.user.id) {
-        key = "e86fafc42b07483884668b87aafd6e9d"
+        key = "e86fafc42b07483884668b87aafd6e9d";
         console.log(data);
         console.log('Game Finder API: ' + key);
         myForm.reset();
@@ -190,11 +206,13 @@ function login(data) {
 
 window.onscroll = function () {
 
-    console.log(scrollY + innerHeight, game_finder.offsetHeight)
-
-    if (game_finder.offsetHeight == scrollY + innerHeight) {
+    if (game_finder.offsetHeight == scrollY + innerHeight && !searching) {
         n++;
         loadGames();
+    }
+    if((game_finder.offsetHeight == scrollY + innerHeight && searching)){
+        s++;
+        searchGames();
     }
 };
 
@@ -203,7 +221,7 @@ let myGames = [];
 let n = 1;
 let c = 0;
 function callbackGames(games) {
-    console.log(games);
+  
     for (let i = 0; i < games.results.length; i++) {
         myGames.push(games.results[i]);
         var date = new Date(`${games.results[i].released}`);
@@ -258,11 +276,9 @@ function callbackGames(games) {
     </article>
     `
     }
-
     like_it();
-
-
 }
+
 function like_it() {
     likes = document.querySelectorAll('.like');
     for (let like of likes) {
@@ -324,9 +340,37 @@ function loadGames() {
     };
 
     fetch(`https://api.rawg.io/api/games?=&key=${key}&page=${n}`, requestOptions)
-        .then(response => (response.ok) ? response.json() : response.text())
-        .then(data => callbackGames(data))
-        .catch(error => console.log(error))
+    .then(response => {
+        if (!response.ok) { throw response }
+        return response.json()
+    })
+    .then(response => callbackGames(response))
+    .catch(error => {
+        error.text().then(error => console.log(JSON.parse(error)))
+    })
+
+}
+function searchGames() {
+
+    let search = document.getElementById('inp_search').value;
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+
+    };
+
+    fetch(`https://api.rawg.io/api/games?=&key=${key}&page=${s}&search=${search}`, requestOptions)
+    .then(response => {
+        if (!response.ok) { throw response }
+        return response.json()
+    })
+    .then(response => callbackGames(response))
+    .catch(error => {
+        error.text().then(error => console.log(JSON.parse(error)))
+    })
 
 }
 window.onload = function () {

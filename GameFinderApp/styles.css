@@ -32,6 +32,7 @@ input,
 i,
 .sso {
     cursor: pointer;
+    color: #515151;
 }
 
 #loginScreen {
@@ -86,6 +87,7 @@ nav {
     position: fixed;
     top: 22.7%;
     left: 2.22rem;
+    z-index: 2;
 }
 
 nav ul {
@@ -99,6 +101,8 @@ nav ul {
 
 nav ul li {
     margin: 0.38rem 0;
+    cursor: pointer;
+
 }
 
 nav ul li h3 {
@@ -176,7 +180,7 @@ main {
 
 .switch {
     width: 44px;
-    height: 22px;
+    height: 24px;
     border-radius: 23px;
     background-color: #E1E1E4;
     margin-left: 10px;
@@ -305,8 +309,6 @@ input[type="submit"] {
     padding-top: 0.72rem;
     padding-bottom: 0.66rem;
 }
-
-
 
 form div {
     margin-top: 1rem;
@@ -587,6 +589,8 @@ article img {
 .four {
     grid-column: 3;
     grid-row: 2 / 4;
+    width: 120px;
+
 }
 
 .four p {
@@ -627,6 +631,56 @@ article img {
 
 }
 
+.searchbar{
+    position: fixed;
+    z-index: 4;
+    left: 37.43%;
+    top: 23px;
+    padding: 10px 0;
+    width: 362px;
+    background: #FFFFFF;
+    border-radius: 4px;    
+}
+
+.searchbar p{
+    margin-left: 40px;
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 400;
+
+}
+.searchbar p span{
+    position: absolute;
+    top: 13px;
+    left: 11px;
+    cursor: pointer;
+
+}
+.searchbar p input{
+    width: 85%;
+    outline: none;
+    color:#3D3D3D;
+}
+
+.searchbar p:focus-within::after{
+    content: url(img/close.svg);
+    right: 12px;
+    cursor: pointer;
+    position: absolute;
+    top: 12px;
+}
+
+
+#layer{
+    width: 100vw;
+    height: 100vh;
+    background: #15151584;
+    position: fixed;
+    z-index: 3;
+    display: none;
+}
+
 @media (max-width: 768px) and (min-width: 322px) {
 
 
@@ -651,6 +705,9 @@ article img {
         margin-left: 0;
     }
 
+    .searchbar{
+        left: 26.4%;
+    }
 
     #games {
         justify-content: center;
