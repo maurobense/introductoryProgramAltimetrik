@@ -17,10 +17,12 @@ let game_finder = document.getElementById('gameFinder');
 let layer = document.getElementById('layer');
 let inp_search = document.getElementById('inp_search');
 let find = document.getElementById('find');
+let bar = document.getElementById('searchbar');
+let last = document.getElementById('last');
 let key;
 let likes;
 let s = 1;
-
+let last_searches = [];
 inp_search.addEventListener('focusin', function(){
     layer.style.display = 'block'
 });
@@ -31,13 +33,21 @@ inp_search.addEventListener('focusout', function(){
 
 find.addEventListener('click', function(){
     searching = true;
-    s = 1;
+    if(inp_search.value.length == 0){
+        searching = false;
+        grid.innerHTML = '';
+        c = 0;
+        n = 1;
+        loadGames()
+    }else{
     c = 0;
     grid.innerHTML = '';
     searchGames();
+}
+
 });
 
-
+last.addEventListener('click', last_two);
 
 function switchDark() {
     if (!darkMode) {
@@ -200,7 +210,9 @@ function login(data) {
         myForm.reset();
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
+        bar.style.display = 'block';
         loadGames();
+
     }
 }
 
@@ -210,20 +222,30 @@ window.onscroll = function () {
         n++;
         loadGames();
     }
-    if((game_finder.offsetHeight == scrollY + innerHeight && searching)){
-        s++;
-        searchGames();
-    }
 };
 
 let grid = document.getElementById('gridGames');
 let myGames = [];
 let n = 1;
 let c = 0;
+
+function last_two(){
+    searching = true;
+    n = 1;
+    grid.innerHTML = '';
+    for (let i = 0; i < last_searches.length; i++) {
+        grid.innerHTML += last_searches[i];
+    }
+    like_it();
+}
 function callbackGames(games) {
-  
-    for (let i = 0; i < games.results.length; i++) {
-        myGames.push(games.results[i]);
+    let g = games.results.length;
+    let myArticles = '';
+
+    if(searching){
+        g = 5;
+    }
+    for (let i = 0; i < g; i++) {
         var date = new Date(`${games.results[i].released}`);
         var options = { year: 'numeric', month: 'long', day: 'numeric' };
         c++;
@@ -242,8 +264,8 @@ function callbackGames(games) {
             let myPlat = assign_icon(games.results[i].parent_platforms[r].platform.name);
             plat += myPlat;
         }
-        grid.innerHTML += ` <article class="card" id="art_${c}">
-        <div class="img"><img src="${games.results[i].background_image}"><span><svg data-liked="false" class="like" id="like_${c}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        myArticles += ` <article class="card" id="art_${games.results[i].id}">
+        <div class="img"><img src="${games.results[i].background_image}"><span><svg data-liked="false" class="like" id="like_${games.results[i].id}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="path-1-outside-1_12_2251" maskUnits="userSpaceOnUse" x="3" y="3" width="18" height="17" fill="#FFFFFF">
         <rect fill="white" x="3" y="3" width="18" height="17"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z"/>
@@ -275,6 +297,13 @@ function callbackGames(games) {
         </div>
     </article>
     `
+    }
+    grid.innerHTML += myArticles;
+    if(searching){
+        if(last_searches.length == 2){
+            last_searches.shift();
+        }
+        last_searches.push(myArticles);
     }
     like_it();
 }
@@ -386,6 +415,7 @@ window.onload = function () {
     if (key != undefined) {
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
+        bar.style.display = 'block';
         loadGames();
     }
 };
