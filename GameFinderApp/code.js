@@ -19,31 +19,47 @@ let inp_search = document.getElementById('inp_search');
 let find = document.getElementById('find');
 let bar = document.getElementById('searchbar');
 let last = document.getElementById('last');
+let profile = document.getElementById('profile');
+let profile_pic = document.getElementById('pic');
+let initials = document.getElementById('initials');
+let logout = document.getElementById('logout');
+let inp_usr = document.getElementById('usr_login');
+let inp_pass = document.getElementById('usr_pass');
 let key;
 let likes;
 let s = 1;
 let last_searches = [];
-inp_search.addEventListener('focusin', function(){
+
+logout.addEventListener('click', log_out);
+inp_usr.addEventListener('keyup', function (e) {
+    if (validateEmail(inp_usr.value)) {
+        inp_usr.style.outlineColor = '#36B972';
+    } else {
+        inp_usr.style.outlineColor = '#FB5F5F';
+    }
+})
+
+inp_search.addEventListener('focusin', function () {
     layer.style.display = 'block'
 });
 
-inp_search.addEventListener('focusout', function(){
+inp_search.addEventListener('focusout', function () {
     layer.style.display = 'none';
 });
 
-find.addEventListener('click', function(){
+find.addEventListener('click', function () {
     searching = true;
-    if(inp_search.value.length == 0){
+    if (inp_search.value.length == 0) {
         searching = false;
         grid.innerHTML = '';
         c = 0;
         n = 1;
         loadGames()
-    }else{
-    c = 0;
-    grid.innerHTML = '';
-    searchGames();
-}
+    } else {
+        c = 0;
+        grid.innerHTML = '';
+        searchGames();
+    }
 
 });
 
@@ -126,7 +142,14 @@ function leftArrow() {
     index--;
     bodyInjection();
 }
-
+function log_out() {
+    localStorage.clear();
+    game_finder.style.display = 'none';
+    login_screen.style.display = 'block';
+    profile.style.display = 'none';
+    bar.style.display = 'none';
+    initials.innerHTML = '';
+}
 function bodyInjection() {
 
     if (!darkMode) {
@@ -158,6 +181,16 @@ form.addEventListener('submit', function (e) {
 
 });
 
+function login_injection() {
+    profile.style.setProperty('position', 'fixed');
+    profile.style.setProperty('z-index', '3');
+    profile.style.setProperty('right', '40px');
+    profile.style.setProperty('top', '23px');
+    profile.style.setProperty('display', 'flex');
+    profile.style.setProperty('align-items', 'center');
+    profile_pic.style.setProperty('background-size', 'contain');
+}
+
 
 function loginRequest() {
     const user = document.getElementById('usr_login').value;
@@ -185,11 +218,46 @@ function loginRequest() {
         })
         .then(response => login(response))
         .catch(error => {
-            error.text().then(error => console.log(JSON.parse(error)))
+            error.text().then(error => login_error(JSON.parse(error)))
         })
 
 }
 
+function error_email() {
+    inp_usr.style.border = '#FB5F5F 1px solid';
+    inp_usr.style.outlineColor = '#FB5F5F';
+    inp_usr.value = '';
+}
+function error_password() {
+    inp_pass.style.border = '#FB5F5F 1px solid';
+    inp_pass.style.outlineColor = '#FB5F5F';
+    eye.style.color = '#FB5F5F';
+    inp_pass.value = '';
+    inp_usr.style.border = '#36B972 1px solid';
+    inp_usr.style.outlineColor = '#36B972';
+}
+function login_error(msj) {
+    switch (msj) {
+        case 'Incorrect password':
+            inp_pass.placeholder = 'Incorrect password';
+            error_password();
+            break;
+
+        case 'Password is too short':
+            inp_pass.placeholder = 'Password is too short';
+            error_password();
+            break;
+        case 'Cannot find user':
+            inp_usr.placeholder = 'Cannot find user';
+            error_email();
+            break;
+        case 'Email format is invalid':
+            inp_usr.placeholder = 'Email format is invalid';
+            error_email();
+            break;
+    }
+
+}
 function login(data) {
     const user = document.getElementById('usr_login').value;
     const pass = document.getElementById('usr_pass').value;
@@ -210,12 +278,30 @@ function login(data) {
         myForm.reset();
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
+        eye.style.color = '#36B972';
+        inp_pass.placeholder = 'Password';
+        inp_pass.style.outlineColor = 'transparent';
+        inp_pass.style.border = '1px solid transparent';
+        inp_usr.style.border = '1px solid transparent';
+        inp_usr.style.outlineColor = 'transparent';
+
+        if (data.user.img != undefined) {
+            profile_pic.style.setProperty('background-image', `url(${data.user.img})`);
+        } else {
+            profile_pic.style.setProperty('background', `#5F81FB`);
+            initials.innerHTML = data.user.email.substring(0, 2).toUpperCase();
+        }
         bar.style.display = 'block';
+        profile.style.display = 'block';
+        login_injection();
         loadGames();
 
     }
 }
-
+function validateEmail(email) {
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(String(email).toLowerCase());
+}
 window.onscroll = function () {
 
     if (game_finder.offsetHeight == scrollY + innerHeight && !searching) {
@@ -229,7 +315,7 @@ let myGames = [];
 let n = 1;
 let c = 0;
 
-function last_two(){
+function last_two() {
     searching = true;
     n = 1;
     grid.innerHTML = '';
@@ -242,8 +328,8 @@ function callbackGames(games) {
     let g = games.results.length;
     let myArticles = '';
 
-    if(searching){
-        g = 5;
+    if (searching) {
+        g = 1;
     }
     for (let i = 0; i < g; i++) {
         var date = new Date(`${games.results[i].released}`);
@@ -299,8 +385,8 @@ function callbackGames(games) {
     `
     }
     grid.innerHTML += myArticles;
-    if(searching){
-        if(last_searches.length == 2){
+    if (searching) {
+        if (last_searches.length == 2) {
             last_searches.shift();
         }
         last_searches.push(myArticles);
@@ -312,17 +398,17 @@ function like_it() {
     likes = document.querySelectorAll('.like');
     for (let like of likes) {
         let mylike = document.querySelector(`#${like.id}`);
-        mylike.addEventListener('click', function(){
-            if(like.dataset.liked == "false"){
+        mylike.addEventListener('click', function () {
+            if (like.dataset.liked == "false") {
                 like.dataset.liked = 'true';
                 like.style.fill = '#FFFFFF'
-            }else{
+            } else {
                 like.dataset.liked = 'false';
                 like.style.fill = 'none';
             }
         });
-        
-    } 
+
+    }
 
 }
 
@@ -369,16 +455,22 @@ function loadGames() {
     };
 
     fetch(`https://api.rawg.io/api/games?=&key=${key}&page=${n}`, requestOptions)
-    .then(response => {
-        if (!response.ok) { throw response }
-        return response.json()
-    })
-    .then(response => callbackGames(response))
-    .catch(error => {
-        error.text().then(error => console.log(JSON.parse(error)))
-    })
+        .then(response => {
+            if (!response.ok) { throw response }
+            return response.json()
+        })
+        .then(response => callbackGames(response))
+        .catch(error => {
+            error.text().then(error => console.log(JSON.parse(error)))
+        })
 
 }
+inp_search.addEventListener('keypress', function (e){
+    if(e.key == 'Enter'){
+        find.click();
+        inp_search.blur();
+    }
+})
 function searchGames() {
 
     let search = document.getElementById('inp_search').value;
@@ -392,14 +484,14 @@ function searchGames() {
     };
 
     fetch(`https://api.rawg.io/api/games?=&key=${key}&page=${s}&search=${search}`, requestOptions)
-    .then(response => {
-        if (!response.ok) { throw response }
-        return response.json()
-    })
-    .then(response => callbackGames(response))
-    .catch(error => {
-        error.text().then(error => console.log(JSON.parse(error)))
-    })
+        .then(response => {
+            if (!response.ok) { throw response }
+            return response.json()
+        })
+        .then(response => callbackGames(response))
+        .catch(error => {
+            error.text().then(error => console.log(JSON.parse(error)))
+        })
 
 }
 window.onload = function () {
@@ -410,7 +502,19 @@ window.onload = function () {
         if (jwt_decode(token).sub == id_user) {
             key = "e86fafc42b07483884668b87aafd6e9d"
         }
+    } else {
+        game_finder.display = 'none';
+        login_screen.display = 'block';
     }
+
+    if (localStorage.pic != undefined) {
+        profile_pic.style.setProperty('background-image', `url(${localStorage.pic})`);
+    } else {
+        profile_pic.style.setProperty('background', `#5F81FB`);
+        initials.innerHTML = localStorage.email.substring(0, 2).toUpperCase();
+    }
+    login_injection();
+    profile_pic.style.setProperty('background-size', 'contain');
 
     if (key != undefined) {
         login_screen.style.display = 'none';
