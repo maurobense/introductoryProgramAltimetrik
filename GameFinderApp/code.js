@@ -43,6 +43,7 @@ inp_search.addEventListener('focusin', function () {
     layer.style.display = 'block'
 });
 
+
 inp_search.addEventListener('focusout', function () {
     layer.style.display = 'none';
 });
@@ -62,6 +63,13 @@ find.addEventListener('click', function () {
     }
 
 });
+
+inp_search.addEventListener('keyup', function(e){
+    if(inp_search.value.length >= 3){
+
+    }
+});
+
 
 last.addEventListener('click', last_two);
 
@@ -273,8 +281,6 @@ function login(data) {
 
     if (jwt_decode(data.accessToken).sub == data.user.id) {
         key = "e86fafc42b07483884668b87aafd6e9d";
-        console.log(data);
-        console.log('Game Finder API: ' + key);
         myForm.reset();
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
@@ -465,12 +471,13 @@ function loadGames() {
         })
 
 }
-inp_search.addEventListener('keypress', function (e){
-    if(e.key == 'Enter'){
+inp_search.addEventListener('keypress', function (e) {
+    if (e.key == 'Enter') {
         find.click();
         inp_search.blur();
     }
-})
+});
+
 function searchGames() {
 
     let search = document.getElementById('inp_search').value;
@@ -483,7 +490,7 @@ function searchGames() {
 
     };
 
-    fetch(`https://api.rawg.io/api/games?=&key=${key}&page=${s}&search=${search}`, requestOptions)
+    fetch(`https://api.rawg.io/api/games?=&key=${key}&search=${search}`, requestOptions)
         .then(response => {
             if (!response.ok) { throw response }
             return response.json()
@@ -494,6 +501,7 @@ function searchGames() {
         })
 
 }
+
 window.onload = function () {
 
     if (localStorage.jwt != undefined) {
