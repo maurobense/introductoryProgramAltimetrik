@@ -499,7 +499,7 @@ ul {
 
 }
 
-article {
+.card {
     width: 363px;
     height: 314px;
     border-radius: 12px;
@@ -508,27 +508,24 @@ article {
     overflow-y: scroll;
     cursor: pointer;
     position: relative;
-    
-
-
 }
 
 article::-webkit-scrollbar{
     display: none;
 }
-article img {
+.img {
     width: 100%;
     height: 180px;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
-.img span{
+.img-cont span{
     position: absolute;
     top: 14.67px;
     right: 13.33px;
 }
 
-.img {
+.img-cont {
     height: 180px;
 }
 
@@ -629,6 +626,10 @@ article img {
 .six {
     grid-column: 2;
     grid-row: 3;
+}
+
+.game_description{
+    display: none;
 }
 
 #gameFinder footer {

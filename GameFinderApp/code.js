@@ -29,6 +29,7 @@ let key;
 let likes;
 let s = 1;
 let last_searches = [];
+let myForm = document.getElementById('form');
 
 logout.addEventListener('click', log_out);
 inp_usr.addEventListener('keyup', function (e) {
@@ -64,8 +65,8 @@ find.addEventListener('click', function () {
 
 });
 
-inp_search.addEventListener('keyup', function(e){
-    if(inp_search.value.length >= 3){
+inp_search.addEventListener('keyup', function (e) {
+    if (inp_search.value.length >= 3) {
 
     }
 });
@@ -182,7 +183,6 @@ function bodyInjection() {
     }
 }
 
-let myForm = document.getElementById('form');
 
 form.addEventListener('submit', function (e) {
     e.preventDefault();
@@ -357,7 +357,7 @@ function callbackGames(games) {
             plat += myPlat;
         }
         myArticles += ` <article class="card" id="art_${games.results[i].id}">
-        <div class="img"><img src="${games.results[i].background_image}"><span><svg data-liked="false" class="like" id="like_${games.results[i].id}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <div class="img-cont"><img class="img"src="${games.results[i].background_image}" alt="A nice picture of ${games.results[i].name}"><span><svg data-liked="false" class="like" id="like_${games.results[i].id}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
         <mask id="path-1-outside-1_12_2251" maskUnits="userSpaceOnUse" x="3" y="3" width="18" height="17" fill="#FFFFFF">
         <rect fill="white" x="3" y="3" width="18" height="17"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z"/>
@@ -367,7 +367,7 @@ function callbackGames(games) {
         </svg>
         </span>
         </div>
-        <div class="wrapper">
+        <div class="wrapper" id="game_${games.results[i].id}">
             <div class="one">
                 <h3 class="title">${games.results[i].name}<span id="pos">#${c}</span></h3>
             </div>
@@ -389,6 +389,8 @@ function callbackGames(games) {
         </div>
     </article>
     `
+        getDescription(games.results[i].id)
+            .then(data => renderDesc(data));
     }
     grid.innerHTML += myArticles;
     if (searching) {
@@ -399,7 +401,19 @@ function callbackGames(games) {
     }
     like_it();
 }
+async function getDescription(id) {
+    let response = await fetch(`https://api.rawg.io/api/games/${id}?key=${key}`);
+    let data = await response.json();
+    return data;
 
+}
+function renderDesc(data) {
+    let dataWrapper = document.getElementById(`game_${data.id}`);
+    dataWrapper.innerHTML += ` <div class="game_description">
+    ${data.description}
+</div>`
+
+}
 function like_it() {
     likes = document.querySelectorAll('.like');
     for (let like of likes) {
@@ -501,6 +515,29 @@ function searchGames() {
         })
 
 }
+function description() {
+    let search = document.getElementById('inp_search').value;
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+        method: 'GET',
+        headers: myHeaders,
+
+    };
+
+    fetch(`https://api.rawg.io/api/games?=&key=${key}&search=${search}`, requestOptions)
+        .then(response => {
+            if (!response.ok) { throw response }
+            return response.json()
+        })
+        .then(response => callbackGames(response))
+        .catch(error => {
+            error.text().then(error => console.log(JSON.parse(error)))
+        })
+
+}
+
 
 window.onload = function () {
 
