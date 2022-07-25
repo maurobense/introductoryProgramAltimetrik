@@ -1,309 +1,4 @@
-document.getElementById('right').addEventListener('click', rightArrow);
-document.getElementById('left').addEventListener('click', leftArrow)
-document.getElementById('darkMode').addEventListener('click', switchDark);
-document.getElementById('submit').addEventListener('click', loginRequest);
 
-let index = 1;
-let body = document.querySelector('#loginScreen');
-let slider = document.querySelectorAll('.slides');
-let darkMode = false;
-let searching = false;
-let on = document.querySelector('#on');
-let off = document.querySelector('#off');
-let sw = document.querySelector('.switch');
-let head = document.getElementById('headerLogin')
-let login_screen = document.getElementById('loginScreen');
-let game_finder = document.getElementById('gameFinder');
-let layer = document.getElementById('layer');
-let inp_search = document.getElementById('inp_search');
-let find = document.getElementById('find');
-let bar = document.getElementById('searchbar');
-let last = document.getElementById('last');
-let profile = document.getElementById('profile');
-let profile_pic = document.getElementById('pic');
-let initials = document.getElementById('initials');
-let logout = document.getElementById('logout');
-let inp_usr = document.getElementById('usr_login');
-let inp_pass = document.getElementById('usr_pass');
-let key;
-let likes;
-let s = 1;
-let last_searches = [];
-let myForm = document.getElementById('form');
-
-logout.addEventListener('click', log_out);
-inp_usr.addEventListener('keyup', function (e) {
-    if (validateEmail(inp_usr.value)) {
-        inp_usr.style.outlineColor = '#36B972';
-    } else {
-        inp_usr.style.outlineColor = '#FB5F5F';
-    }
-})
-
-inp_search.addEventListener('focusin', function () {
-    layer.style.display = 'block'
-});
-
-
-inp_search.addEventListener('focusout', function () {
-    layer.style.display = 'none';
-});
-
-find.addEventListener('click', function () {
-    searching = true;
-    if (inp_search.value.length == 0) {
-        searching = false;
-        grid.innerHTML = '';
-        c = 0;
-        n = 1;
-        loadGames()
-    } else {
-        c = 0;
-        grid.innerHTML = '';
-        searchGames();
-    }
-
-});
-
-inp_search.addEventListener('keyup', function (e) {
-    if (inp_search.value.length >= 3) {
-
-    }
-});
-
-
-last.addEventListener('click', last_two);
-
-function switchDark() {
-    if (!darkMode) {
-        index = 1;
-        darkMode = true;
-        on.style.backgroundColor = 'transparent';
-        on.children[0].style.zIndex = 1;
-        on.children[0].style.color = '#FFFFFF';
-        off.style.backgroundColor = '#FFFFFF';
-        off.children[0].style.zIndex = -1;
-        sw.style.backgroundColor = '#5F81FB';
-        head.style.backgroundColor = 'transparent'
-        document.documentElement.style.setProperty('--text-color', '#FFFFFF');
-        document.documentElement.style.setProperty('--form-background', 'rgb(0 0 0 / 80%)');
-        document.documentElement.style.setProperty('--slider-background', '#515151');
-        document.documentElement.style.setProperty('--slides', '#ffffff30')
-        document.documentElement.style.setProperty('--sso-color', '#FFFFFF')
-        document.documentElement.style.setProperty('--article-background', '#303030')
-        document.documentElement.style.setProperty('--main-background', '#151515')
-        document.documentElement.style.setProperty('--footer-effect', 'linear-gradient(180deg, rgba(0, 0, 0, 0.0001) 0%, #000000 100%)')
-
-        bodyInjection();
-
-
-    } else {
-        index = 1;
-        darkMode = false;
-        on.style.backgroundColor = '#FFFFFF';
-        on.children[0].style.zIndex = -1;
-        off.style.backgroundColor = 'transparent';
-        off.children[0].style.zIndex = 1;
-        sw.style.backgroundColor = '#E1E1E4';
-        document.documentElement.style.setProperty('--text-color', '#515151');
-        document.documentElement.style.setProperty('--form-background', '#F0F0F0');
-        document.documentElement.style.setProperty('--slider-background', '#E1E1E4');
-        document.documentElement.style.setProperty('--slides', '#5151513f');
-        document.documentElement.style.setProperty('--sso-color', '#36B972');
-        document.documentElement.style.setProperty('--article-background', '#FFFFFF');
-        document.documentElement.style.setProperty('--main-background', '#E5E5E5');
-        document.documentElement.style.setProperty('--footer-effect', 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #F0F0F0 100%)')
-
-        head.style.backgroundColor = 'rgba(255, 255, 255, 0.251)';
-
-        bodyInjection();
-    }
-}
-
-
-document.getElementById('eye').onclick = function () {
-    let icon = document.getElementById('icon');
-    let pass = document.getElementById('usr_pass');
-
-    if (pass.type == "password") {
-        pass.type = "text"
-        icon.innerText = "visibility_off"
-    } else {
-        pass.type = "password";
-        icon.innerText = "visibility"
-    }
-}
-
-
-
-function rightArrow() {
-    if (index == 6) {
-        index = 0;
-    }
-    index++;
-    bodyInjection();
-}
-
-function leftArrow() {
-    if (index == 1) {
-        index = 7;
-    }
-    index--;
-    bodyInjection();
-}
-function log_out() {
-    localStorage.clear();
-    game_finder.style.display = 'none';
-    login_screen.style.display = 'block';
-    profile.style.display = 'none';
-    bar.style.display = 'none';
-    initials.innerHTML = '';
-}
-function bodyInjection() {
-
-    if (!darkMode) {
-        let slideSelect = document.querySelector(`#slide_${index}`);
-        body.style.background = `url(img/carousel${index}.png)#C4C4C4`;
-        body.style.backgroundSize = 'cover';
-        body.style.backgroundRepeat = 'no-repeat';
-        for (let i = 0; i < slider.length; i++) {
-            slider[i].style.background = 'var(--slides)';
-        }
-        slideSelect.style.background = 'var(--text-color)';
-    } else {
-        let slideSelect = document.querySelector(`#slide_${index}`);
-        body.style.background = `url(img/carouselD${index}.png)#C4C4C4`;
-        body.style.backgroundSize = 'cover';
-        body.style.backgroundRepeat = 'no-repeat';
-        for (let i = 0; i < slider.length; i++) {
-            slider[i].style.background = 'var(--slides)';
-        }
-        slideSelect.style.background = 'var(--text-color)';
-
-    }
-}
-
-
-form.addEventListener('submit', function (e) {
-    e.preventDefault();
-
-});
-
-function login_injection() {
-    profile.style.setProperty('position', 'fixed');
-    profile.style.setProperty('z-index', '3');
-    profile.style.setProperty('right', '40px');
-    profile.style.setProperty('top', '23px');
-    profile.style.setProperty('display', 'flex');
-    profile.style.setProperty('align-items', 'center');
-    profile_pic.style.setProperty('background-size', 'contain');
-}
-
-
-function loginRequest() {
-    const user = document.getElementById('usr_login').value;
-    const pass = document.getElementById('usr_pass').value;
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
-
-
-    var raw = JSON.stringify({
-        "email": `${user}`,
-        "password": `${pass}`
-    });
-
-    var requestOptions = {
-        method: 'POST',
-        headers: myHeaders,
-        body: raw,
-
-    };
-
-    fetch("http://localhost:3000/login", requestOptions)
-        .then(response => {
-            if (!response.ok) { throw response }
-            return response.json()
-        })
-        .then(response => login(response))
-        .catch(error => {
-            error.text().then(error => login_error(JSON.parse(error)))
-        })
-
-}
-
-function error_email() {
-    inp_usr.style.border = '#FB5F5F 1px solid';
-    inp_usr.style.outlineColor = '#FB5F5F';
-    inp_usr.value = '';
-}
-function error_password() {
-    inp_pass.style.border = '#FB5F5F 1px solid';
-    inp_pass.style.outlineColor = '#FB5F5F';
-    eye.style.color = '#FB5F5F';
-    inp_pass.value = '';
-    inp_usr.style.border = '#36B972 1px solid';
-    inp_usr.style.outlineColor = '#36B972';
-}
-function login_error(msj) {
-    switch (msj) {
-        case 'Incorrect password':
-            inp_pass.placeholder = 'Incorrect password';
-            error_password();
-            break;
-
-        case 'Password is too short':
-            inp_pass.placeholder = 'Password is too short';
-            error_password();
-            break;
-        case 'Cannot find user':
-            inp_usr.placeholder = 'Cannot find user';
-            error_email();
-            break;
-        case 'Email format is invalid':
-            inp_usr.placeholder = 'Email format is invalid';
-            error_email();
-            break;
-    }
-
-}
-function login(data) {
-    const user = document.getElementById('usr_login').value;
-    const pass = document.getElementById('usr_pass').value;
-
-    if (myForm.check.checked) {
-        localStorage.setItem('jwt', data.accessToken)
-        localStorage.setItem('id', data.user.id)
-        localStorage.setItem('mail', data.user.email)
-        localStorage.setItem('username', data.user.username)
-        localStorage.setItem('pic', data.user.img)
-    }
-
-
-    if (jwt_decode(data.accessToken).sub == data.user.id) {
-        key = "e86fafc42b07483884668b87aafd6e9d";
-        myForm.reset();
-        login_screen.style.display = 'none';
-        game_finder.style.display = 'block';
-        eye.style.color = '#36B972';
-        inp_pass.placeholder = 'Password';
-        inp_pass.style.outlineColor = 'transparent';
-        inp_pass.style.border = '1px solid transparent';
-        inp_usr.style.border = '1px solid transparent';
-        inp_usr.style.outlineColor = 'transparent';
-
-        if (data.user.img != undefined) {
-            profile_pic.style.setProperty('background-image', `url(${data.user.img})`);
-        } else {
-            profile_pic.style.setProperty('background', `#5F81FB`);
-            initials.innerHTML = data.user.email.substring(0, 2).toUpperCase();
-        }
-        bar.style.display = 'block';
-        profile.style.display = 'block';
-        login_injection();
-        loadGames();
-
-    }
-}
 function validateEmail(email) {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     return re.test(String(email).toLowerCase());
@@ -317,7 +12,6 @@ window.onscroll = function () {
 };
 
 let grid = document.getElementById('gridGames');
-let myGames = [];
 let n = 1;
 let c = 0;
 
@@ -326,80 +20,45 @@ function last_two() {
     n = 1;
     grid.innerHTML = '';
     for (let i = 0; i < last_searches.length; i++) {
-        grid.innerHTML += last_searches[i];
+        render_card(findGameById(last_searches[i]));
+        renderDesc(findGameById(last_searches[i]));
     }
     like_it();
 }
 function callbackGames(games) {
     let g = games.results.length;
-    let myArticles = '';
-
     if (searching) {
         g = 1;
     }
     for (let i = 0; i < g; i++) {
-        var date = new Date(`${games.results[i].released}`);
-        var options = { year: 'numeric', month: 'long', day: 'numeric' };
-        c++;
-        let plat = "";
-        let gen = "";
-        for (let f = 0; f < games.results[i].genres.length; f++) {
-            if (f == games.results[i].genres.length - 1) {
-                gen += `${games.results[i].genres[f].name}`
-            } else {
-                gen += `${games.results[i].genres[f].name}, `
-            }
-
-        }
-
-        for (let r = 0; r < games.results[i].parent_platforms.length; r++) {
-            let myPlat = assign_icon(games.results[i].parent_platforms[r].platform.name);
-            plat += myPlat;
-        }
-        myArticles += ` <article class="card" id="art_${games.results[i].id}">
-        <div class="img-cont"><img class="img"src="${games.results[i].background_image}" alt="A nice picture of ${games.results[i].name}"><span><svg data-liked="false" class="like" id="like_${games.results[i].id}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <mask id="path-1-outside-1_12_2251" maskUnits="userSpaceOnUse" x="3" y="3" width="18" height="17" fill="#FFFFFF">
-        <rect fill="white" x="3" y="3" width="18" height="17"/>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z"/>
-        </mask>
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z" />
-        <path d="M12 5.659L11.225 6.29099L12 7.24137L12.775 6.29095L12 5.659ZM10.4373 4.43445L10.0089 5.33807L10.4373 4.43445ZM17.273 14.511L18.0323 15.1618L18.0324 15.1616L17.273 14.511ZM12.614 18.789L13.228 19.5783L13.2282 19.5782L12.614 18.789ZM11.386 18.789L10.7718 19.5782L10.772 19.5783L11.386 18.789ZM6.727 14.511L7.48647 13.8605L7.48638 13.8604L6.727 14.511ZM8.5 4V5.00001L8.50142 5L8.5 4ZM12.775 5.02702C12.2576 4.39259 11.6053 3.88146 10.8656 3.53082L10.0089 5.33807C10.4801 5.56139 10.8955 5.88693 11.225 6.29099L12.775 5.02702ZM15.5 3C13.7788 3 12.2341 3.78953 11.225 5.02706L12.775 6.29095C13.4179 5.50248 14.4012 5 15.5 5V3ZM21 8.467C21 5.42801 18.5185 3 15.5 3V5C17.4335 5 19 6.552 19 8.467H21ZM18.0324 15.1616C19.5402 13.4019 21 11.0817 21 8.467H19C19 10.3543 17.9258 12.2121 16.5136 13.8604L18.0324 15.1616ZM13.2282 19.5782C14.601 18.5098 16.483 16.9694 18.0323 15.1618L16.5137 13.8602C15.101 15.5086 13.351 16.9482 11.9998 17.9998L13.2282 19.5782ZM12 19.9997C12.4448 19.9997 12.8769 19.8514 13.228 19.5783L12 17.9997L12 17.9997V19.9997ZM10.772 19.5783C11.1231 19.8514 11.5552 19.9997 12 19.9997V17.9997V17.9997L10.772 19.5783ZM5.96753 15.1615C7.517 16.9705 9.39929 18.51 10.7718 19.5782L12.0002 17.9998C10.6487 16.948 8.899 15.5095 7.48647 13.8605L5.96753 15.1615ZM3 8.467C3 11.0817 4.45985 13.4019 5.96762 15.1616L7.48638 13.8604C6.07415 12.2121 5 10.3543 5 8.467H3ZM8.5 3C5.48147 3 3 5.42801 3 8.467H5C5 6.552 6.56653 5 8.5 5V3ZM10.8656 3.53082C10.1258 3.18018 9.31722 2.99884 8.49858 3.00001L8.50142 5C9.0228 4.99926 9.5378 5.11476 10.0089 5.33807L10.8656 3.53082Z" fill="#FFFFFF" mask="url(#path-1-outside-1_12_2251)"/>
-        </svg>
-        </span>
-        </div>
-        <div class="wrapper" id="game_${games.results[i].id}">
-            <div class="one">
-                <h3 class="title">${games.results[i].name}<span id="pos">#${c}</span></h3>
-            </div>
-            <div class="two">
-                <p>Release date:</p>
-            </div>
-            <div class="three">
-                <p>${date.toLocaleDateString("en-EN", options)}</p>
-            </div>
-            <div class="four">
-                <p>${plat}</p>
-            </div>
-            <div class="five">
-                <p>Genres:</p>
-            </div>
-            <div class="six">
-                <p>${gen}</p>
-            </div>
-        </div>
-    </article>
-    `
+        render_card(games.results[i]);
         getDescription(games.results[i].id)
-            .then(data => renderDesc(data));
-    }
-    grid.innerHTML += myArticles;
-    if (searching) {
-        if (last_searches.length == 2) {
-            last_searches.shift();
+            .then(data => {
+                games.results[i]["description"] = data.description
+                games_list.push(games.results[i]);
+                renderDesc(data)
+                
+            });
+        if (searching) {
+
+            if (last_searches.length == 2) {
+                last_searches.shift();
+            }
+            last_searches.push(games.results[i].id);
         }
-        last_searches.push(myArticles);
     }
     like_it();
+}
+function findGameById(id) {
+    let game = null;
+    let i = 0;
+    while (game == null && i < games_list.length) {
+        if (games_list[i].id == id) {
+            game = games_list[i];
+        }
+        i++
+    }
+    return game;
 }
 async function getDescription(id) {
     let response = await fetch(`https://api.rawg.io/api/games/${id}?key=${key}`);
@@ -414,8 +73,69 @@ function renderDesc(data) {
 </div>`
 
 }
+
+function render_card(game) {
+    var date = new Date(`${game.released}`);
+    var options = { year: 'numeric', month: 'long', day: 'numeric' };
+    let desc = findGameById(game.description);
+    c++;
+    let plat = "";
+    let gen = "";
+    for (let f = 0; f < game.genres.length; f++) {
+        if (f == game.genres.length - 1) {
+            gen += `${game.genres[f].name}`
+        } else {
+            gen += `${game.genres[f].name}, `
+        }
+
+    }
+
+    for (let r = 0; r < game.parent_platforms.length; r++) {
+        let myPlat = assign_icon(game.parent_platforms[r].platform.name);
+        plat += myPlat;
+    }
+    grid.innerHTML += ` <article class="card${cc()}" id="${game.id}">
+        <div class="img-cont${cc()}"><img class="img"src="${game.background_image}" alt="A nice picture of ${game.name}"><span><svg data-liked="false" class="like" id="like_${game.id}" width="24" height="23" viewBox="0 0 24 23" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <mask id="path-1-outside-1_12_2251" maskUnits="userSpaceOnUse" x="3" y="3" width="18" height="17" fill="#FFFFFF">
+        <rect fill="white" x="3" y="3" width="18" height="17"/>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z"/>
+        </mask>
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M10.4373 4.43445C11.0427 4.72143 11.5766 5.13976 12 5.659C12.826 4.646 14.09 4 15.5 4C17.976 4 20 5.99 20 8.467C20 10.718 18.733 12.807 17.273 14.511C15.792 16.239 13.976 17.729 12.614 18.789C12.4385 18.9256 12.2224 18.9997 12 18.9997C11.7776 18.9997 11.5615 18.9256 11.386 18.789C10.024 17.729 8.208 16.24 6.727 14.511C5.267 12.807 4 10.718 4 8.467C4 5.99 6.024 4 8.5 4C9.17001 3.99905 9.83181 4.14747 10.4373 4.43445Z" />
+        <path d="M12 5.659L11.225 6.29099L12 7.24137L12.775 6.29095L12 5.659ZM10.4373 4.43445L10.0089 5.33807L10.4373 4.43445ZM17.273 14.511L18.0323 15.1618L18.0324 15.1616L17.273 14.511ZM12.614 18.789L13.228 19.5783L13.2282 19.5782L12.614 18.789ZM11.386 18.789L10.7718 19.5782L10.772 19.5783L11.386 18.789ZM6.727 14.511L7.48647 13.8605L7.48638 13.8604L6.727 14.511ZM8.5 4V5.00001L8.50142 5L8.5 4ZM12.775 5.02702C12.2576 4.39259 11.6053 3.88146 10.8656 3.53082L10.0089 5.33807C10.4801 5.56139 10.8955 5.88693 11.225 6.29099L12.775 5.02702ZM15.5 3C13.7788 3 12.2341 3.78953 11.225 5.02706L12.775 6.29095C13.4179 5.50248 14.4012 5 15.5 5V3ZM21 8.467C21 5.42801 18.5185 3 15.5 3V5C17.4335 5 19 6.552 19 8.467H21ZM18.0324 15.1616C19.5402 13.4019 21 11.0817 21 8.467H19C19 10.3543 17.9258 12.2121 16.5136 13.8604L18.0324 15.1616ZM13.2282 19.5782C14.601 18.5098 16.483 16.9694 18.0323 15.1618L16.5137 13.8602C15.101 15.5086 13.351 16.9482 11.9998 17.9998L13.2282 19.5782ZM12 19.9997C12.4448 19.9997 12.8769 19.8514 13.228 19.5783L12 17.9997L12 17.9997V19.9997ZM10.772 19.5783C11.1231 19.8514 11.5552 19.9997 12 19.9997V17.9997V17.9997L10.772 19.5783ZM5.96753 15.1615C7.517 16.9705 9.39929 18.51 10.7718 19.5782L12.0002 17.9998C10.6487 16.948 8.899 15.5095 7.48647 13.8605L5.96753 15.1615ZM3 8.467C3 11.0817 4.45985 13.4019 5.96762 15.1616L7.48638 13.8604C6.07415 12.2121 5 10.3543 5 8.467H3ZM8.5 3C5.48147 3 3 5.42801 3 8.467H5C5 6.552 6.56653 5 8.5 5V3ZM10.8656 3.53082C10.1258 3.18018 9.31722 2.99884 8.49858 3.00001L8.50142 5C9.0228 4.99926 9.5378 5.11476 10.0089 5.33807L10.8656 3.53082Z" fill="#FFFFFF" mask="url(#path-1-outside-1_12_2251)"/>
+        </svg>
+        </span>
+        </div>
+        <div class="wrapper${cc()}" id="game_${game.id}">
+            <div class="one${cc()}">
+                <h3 class="title">${game.name}<span id="pos">#${c}</span></h3>
+            </div>
+            <div class="two${cc()}">
+                <p>Release date:</p>
+            </div>
+            <div class="three${cc()}">
+                <p>${date.toLocaleDateString("en-EN", options)}</p>
+            </div>
+            <div class="four${cc()}">
+                <p>${plat}</p>
+            </div>
+            <div class="five${cc()}">
+                <p>Genres:</p>
+            </div>
+            <div class="six${cc()}">
+                <p>${gen}</p>
+            </div>
+        </div>    
+    </article>`
+}
 function like_it() {
     likes = document.querySelectorAll('.like');
+    let articles = document.getElementsByTagName('article');
+    for(let artic of articles){
+        artic.addEventListener('click', function(e){
+            if(!e.target.closest('.like'))
+            console.log(findGameById(artic.id));
+        })
+    }
     for (let like of likes) {
         let mylike = document.querySelector(`#${like.id}`);
         mylike.addEventListener('click', function () {
@@ -427,13 +147,8 @@ function like_it() {
                 like.style.fill = 'none';
             }
         });
-
     }
-
 }
-
-
-
 function assign_icon(plat) {
     switch (plat) {
         case 'PlayStation':
@@ -481,19 +196,10 @@ function loadGames() {
         })
         .then(response => callbackGames(response))
         .catch(error => {
-            error.text().then(error => console.log(JSON.parse(error)))
+            console.log(error)
         })
-
 }
-inp_search.addEventListener('keypress', function (e) {
-    if (e.key == 'Enter') {
-        find.click();
-        inp_search.blur();
-    }
-});
-
 function searchGames() {
-
     let search = document.getElementById('inp_search').value;
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
@@ -510,34 +216,35 @@ function searchGames() {
             return response.json()
         })
         .then(response => callbackGames(response))
-        .catch(error => {
-            error.text().then(error => console.log(JSON.parse(error)))
-        })
+        .catch(error => console.log(error))
 
 }
-function description() {
-    let search = document.getElementById('inp_search').value;
-    var myHeaders = new Headers();
-    myHeaders.append("Content-Type", "application/json");
+let searchA = document.getElementById('inp_search');
 
-    var requestOptions = {
-        method: 'GET',
-        headers: myHeaders,
+searchA.addEventListener('keyup', function(){
+    if(searchA.value.length >= 3){
+        ver();
 
-    };
+    }
+})
 
-    fetch(`https://api.rawg.io/api/games?=&key=${key}&search=${search}`, requestOptions)
-        .then(response => {
-            if (!response.ok) { throw response }
-            return response.json()
-        })
-        .then(response => callbackGames(response))
-        .catch(error => {
-            error.text().then(error => console.log(JSON.parse(error)))
-        })
+async function drop_down(){
+    const search = document.getElementById('inp_search').value;
+    const response = await fetch(`https://api.rawg.io/api/games?=&key=${key}&search=${search}`);
+    const data = await response.json();
+
+    return data;
 
 }
 
+function ver(){
+    drop_down().then(data =>{
+        console.log(data.results[0].name);
+        console.log(data.results[1].name);
+        console.log(data.results[2].name);
+        console.log(data.results[3].name);
+    })
+}
 
 window.onload = function () {
 
@@ -545,7 +252,7 @@ window.onload = function () {
         let token = localStorage.getItem('jwt');
         let id_user = localStorage.getItem('id')
         if (jwt_decode(token).sub == id_user) {
-            key = "e86fafc42b07483884668b87aafd6e9d"
+            key = "6d6ebb6b577345479b747c82519a0152"
         }
     } else {
         game_finder.display = 'none';
@@ -568,3 +275,4 @@ window.onload = function () {
         loadGames();
     }
 };
+

@@ -490,18 +490,26 @@ ul {
     position: relative;
     justify-content: flex-end;
 }
+.grid1{
+    grid-template-columns: none;
+    margin-right: 14rem;
 
+}
+.grid{
+    grid-template-columns: repeat(3, 1fr);
+    margin-right: 2.22rem;
+}
 #gridGames {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
     gap: 24px;
-    margin-right: 2.22rem;
-
 }
 
 .card {
     width: 363px;
     height: 314px;
+  
+}
+.card,.card1{
     border-radius: 12px;
     background-color: var(--article-background);
     box-shadow: 0px 0px 7px rgba(106, 106, 106, 0.25);
@@ -519,7 +527,8 @@ article::-webkit-scrollbar{
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
 }
-.img-cont span{
+
+.img-cont span,.img-cont1 span{
     position: absolute;
     top: 14.67px;
     right: 13.33px;
@@ -576,7 +585,7 @@ article::-webkit-scrollbar{
     width: 80%;
 }
 
-.one h3 span {
+.one h3 span,.one1 h3 span {
     color: #36B972;
 }
 
@@ -611,7 +620,7 @@ article::-webkit-scrollbar{
 
 }
 
-.four p span svg {
+.four,.four1 p span svg {
     fill: var(--text-color);
     margin-bottom: 4px;
 }
@@ -629,8 +638,115 @@ article::-webkit-scrollbar{
 }
 
 .game_description{
+    grid-column: 1 / 9;
+    grid-row: 4;
     display: none;
 }
+
+/* test ----------------------------------------------------- */
+.card1 {
+    width: 697px;
+    height: 538px;
+    border-radius: 12px;
+
+}
+
+.img-cont1 img{
+    width: 100%;
+    height: 315px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.wrapper1 {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    row-gap: 10px;
+    margin: 10px;
+}
+
+.wrapper1 div {
+    position: relative;
+}
+
+.wrapper1 div p {
+    font-size: 14px;
+}
+
+
+.one1 {
+    grid-column: 1 / 9;
+    grid-row: 1;
+    text-align: left;
+    align-items: center;
+}
+
+.one1 span {
+    position: absolute;
+    right: 0;
+    font-size: 18px;
+    top: 10%;
+}
+
+.two1 {
+    grid-column: 1;
+    grid-row: 2;
+    width: 80px;
+}
+
+.three1 {
+    grid-column: 2;
+    grid-row: 2;
+    width: 100px;
+
+}
+
+.four1 {
+    grid-column: 6 / 9;
+    grid-row: 2 / 4;
+    
+}
+
+.four1 p {
+    text-align: right;
+}
+
+.four1 p span {
+    width: 20px;
+    height: 20px;
+    margin-left: 16px;
+}
+
+.four1 p span svg {
+    margin-bottom: 4px;
+}
+
+.five1 {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.six1 {
+    grid-column: 4;
+    grid-row: 2;
+    width: 180px;
+}
+
+.img {
+    position: relative;
+}
+
+.img span svg {
+    position: absolute;
+    z-index: 1;
+    top: 14.67px;
+    right: 13.33px;
+
+}
+.game_description{
+    display: none;
+}
+/* test ----------------------------------------------------- */
 
 #gameFinder footer {
     width: 100%;
@@ -747,9 +863,13 @@ article::-webkit-scrollbar{
     #games {
         justify-content: center;
     }
-    #gridGames {
+    .grid {
         grid-template-columns: repeat(2, 1fr);
         margin: 0;
+    }
+  
+    .grid1{
+        margin: 0 auto;
     }
 
     #loginScreen footer {
