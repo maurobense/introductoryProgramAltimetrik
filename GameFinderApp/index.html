@@ -20,7 +20,6 @@
     <link rel="stylesheet" href="styles.css">
 
 
-    <!-- To do (if got time, just 1 h1)-->
     <title>Game Finder</title>
     <script src="https://unpkg.com/jwt-decode/build/jwt-decode.js"></script>
 </head>
@@ -36,10 +35,7 @@
         </div>
     </div>
 </div>
-<div id="profile">
-    <p id="logout">Log out</p>
-    <div id="pic"><p id="initials"></p></div>
-</div>
+
 <div class="searchbar" id="searchbar">
     <p id="bar"><span id="find"><svg width="18" height="18" viewBox="0 0 18 18" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -157,6 +153,12 @@
         </footer>
     </section>
     <section id="gameFinder">
+        <div id="profile">
+            <p id="logout">Log out</p>
+            <div id="pic"><p id="initials"></p></div>
+        </div>
+        <div id="mod" class="modal-overlay"></div>
+        </div>
         <header id="headerFinder">
             <svg width="330" height="42" viewBox="0 0 330 42" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -224,13 +226,13 @@
             <div id="gridGames" class="grid">
 
 
-
             </div>
         </main>
         <footer></footer>
     </section>
     <script src="variables.js"></script>
     <script src="code.js"></script>
+    <script src="login.js"></script>
     <script src="styling.js"></script>
     <script src="event-listeners.js"></script>
 

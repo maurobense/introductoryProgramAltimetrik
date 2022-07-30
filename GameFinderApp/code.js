@@ -34,10 +34,13 @@ function callbackGames(games) {
         render_card(games.results[i]);
         getDescription(games.results[i].id)
             .then(data => {
-                games.results[i]["description"] = data.description
-                games_list.push(games.results[i]);
-                renderDesc(data)
-                
+                getMovies(games.results[i].id)
+                    .then(d => {
+                        Object.assign(games.results[i], data);
+                        games.results[i]["movie"] = d.results[0]?.data.max;
+                        games_list.push(games.results[i]);
+                        renderDesc(data)
+                    })
             });
         if (searching) {
 
@@ -66,18 +69,32 @@ async function getDescription(id) {
     return data;
 
 }
+
+async function getMovies(id) {
+    let response = await fetch(`https://api.rawg.io/api/games/${id}/movies?key=${key}`);
+    let data = await response.json();
+    return data;
+}
 function renderDesc(data) {
     let dataWrapper = document.getElementById(`game_${data.id}`);
-    dataWrapper.innerHTML += ` <div class="game_description">
+    dataWrapper.innerHTML += `<div class="game_description${cc()}">
     ${data.description}
 </div>`
 
 }
 
-function render_card(game) {
-    var date = new Date(`${game.released}`);
+function date_nice(release){
+    var date = new Date(`${release}`);
     var options = { year: 'numeric', month: 'long', day: 'numeric' };
-    let desc = findGameById(game.description);
+    return date.toLocaleDateString("en-EN", options);
+}
+function date_short(release){
+    var date = new Date(`${release}`);
+    var options = { year: 'numeric', month: 'short', day: 'numeric' };
+    return date.toLocaleDateString("en-EN", options);
+}
+
+function render_card(game) {
     c++;
     let plat = "";
     let gen = "";
@@ -113,7 +130,7 @@ function render_card(game) {
                 <p>Release date:</p>
             </div>
             <div class="three${cc()}">
-                <p>${date.toLocaleDateString("en-EN", options)}</p>
+                <p>${date_nice(game.released)}</p>
             </div>
             <div class="four${cc()}">
                 <p>${plat}</p>
@@ -130,10 +147,11 @@ function render_card(game) {
 function like_it() {
     likes = document.querySelectorAll('.like');
     let articles = document.getElementsByTagName('article');
-    for(let artic of articles){
-        artic.addEventListener('click', function(e){
-            if(!e.target.closest('.like'))
-            console.log(findGameById(artic.id));
+    for (let artic of articles) {
+        artic.addEventListener('click', function (e) {
+            if (!e.target.closest('.like'))
+                console.log(findGameById(artic.id));
+            setTimeout(go_modal, 10, findGameById(artic.id));
         })
     }
     for (let like of likes) {
@@ -221,14 +239,14 @@ function searchGames() {
 }
 let searchA = document.getElementById('inp_search');
 
-searchA.addEventListener('keyup', function(){
-    if(searchA.value.length >= 3){
+searchA.addEventListener('keyup', function () {
+    if (searchA.value.length >= 3) {
         ver();
 
     }
 })
 
-async function drop_down(){
+async function drop_down() {
     const search = document.getElementById('inp_search').value;
     const response = await fetch(`https://api.rawg.io/api/games?=&key=${key}&search=${search}`);
     const data = await response.json();
@@ -237,8 +255,8 @@ async function drop_down(){
 
 }
 
-function ver(){
-    drop_down().then(data =>{
+function ver() {
+    drop_down().then(data => {
         console.log(data.results[0].name);
         console.log(data.results[1].name);
         console.log(data.results[2].name);
@@ -252,27 +270,27 @@ window.onload = function () {
         let token = localStorage.getItem('jwt');
         let id_user = localStorage.getItem('id')
         if (jwt_decode(token).sub == id_user) {
-            key = "6d6ebb6b577345479b747c82519a0152"
+            key = "fed8a0f56e2446908622753eff336b7a"
+        }
+        if (localStorage.pic != undefined) {
+            profile_pic.style.setProperty('background-image', `url(${localStorage.pic})`);
+        } else {
+            profile_pic.style.setProperty('background', `#5F81FB`);
+            initials.innerHTML = localStorage.email.substring(0, 2).toUpperCase();
         }
     } else {
         game_finder.display = 'none';
         login_screen.display = 'block';
     }
 
-    if (localStorage.pic != undefined) {
-        profile_pic.style.setProperty('background-image', `url(${localStorage.pic})`);
-    } else {
-        profile_pic.style.setProperty('background', `#5F81FB`);
-        initials.innerHTML = localStorage.email.substring(0, 2).toUpperCase();
-    }
     login_injection();
-    profile_pic.style.setProperty('background-size', 'contain');
 
     if (key != undefined) {
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
         bar.style.display = 'block';
         loadGames();
+        profile_pic.style.setProperty('background-size', 'contain');
     }
 };
 
