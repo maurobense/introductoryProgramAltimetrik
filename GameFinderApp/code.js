@@ -293,7 +293,6 @@ window.onload = function () {
     if (key != undefined) {
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';
-        bar.style.display = 'block';
         loadGames();
         profile_pic.style.setProperty('background-size', 'contain');
     }
