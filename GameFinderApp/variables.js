@@ -19,6 +19,7 @@ let profile_pic = document.getElementById('pic');
 let initials = document.getElementById('initials');
 let logout = document.getElementById('logout');
 let inp_usr = document.getElementById('usr_login');
+let nav = document.getElementById('nav');
 let inp_pass = document.getElementById('usr_pass');
 let key;
 let likes;

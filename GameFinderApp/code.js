@@ -27,9 +27,7 @@ function last_two() {
 }
 function callbackGames(games) {
     let g = games.results.length;
-    if (searching) {
-        g = 1;
-    }
+   
     for (let i = 0; i < g; i++) {
         render_card(games.results[i]);
         getDescription(games.results[i].id)
@@ -42,13 +40,14 @@ function callbackGames(games) {
                         renderDesc(data)
                     })
             });
-        if (searching) {
+       
+    }
+    if (searching) {
 
-            if (last_searches.length == 2) {
-                last_searches.shift();
-            }
-            last_searches.push(games.results[i].id);
+        if (last_searches.length == 2) {
+            last_searches.shift();
         }
+        last_searches.push(games.results[0].id);
     }
     like_it();
 }
@@ -149,9 +148,10 @@ function like_it() {
     let articles = document.getElementsByTagName('article');
     for (let artic of articles) {
         artic.addEventListener('click', function (e) {
-            if (!e.target.closest('.like'))
+            if (!e.target.closest('.like')){
                 console.log(findGameById(artic.id));
-            setTimeout(go_modal, 10, findGameById(artic.id));
+            setTimeout(go_modal, 0, findGameById(artic.id));
+            }
         })
     }
     for (let like of likes) {
@@ -242,7 +242,8 @@ let searchA = document.getElementById('inp_search');
 searchA.addEventListener('keyup', function () {
     if (searchA.value.length >= 3) {
         ver();
-
+    }else{
+    document.getElementById('comp').style.display = 'none';
     }
 })
 
@@ -256,11 +257,15 @@ async function drop_down() {
 }
 
 function ver() {
+    let comp = document.getElementsByClassName('comp');
+    let complete = document.getElementById('comp');
+    complete.style.display = 'block';
     drop_down().then(data => {
-        console.log(data.results[0].name);
-        console.log(data.results[1].name);
-        console.log(data.results[2].name);
-        console.log(data.results[3].name);
+        comp[0].innerHTML = (data.results[0].name);
+        comp[1].innerHTML = (data.results[1].name);
+        comp[2].innerHTML = (data.results[2].name);
+        comp[3].innerHTML = (data.results[3].name);
+   
     })
 }
 
@@ -270,7 +275,7 @@ window.onload = function () {
         let token = localStorage.getItem('jwt');
         let id_user = localStorage.getItem('id')
         if (jwt_decode(token).sub == id_user) {
-            key = "fed8a0f56e2446908622753eff336b7a"
+            key = "65d3eda8b5d146f8ad996dc4be862b8e"
         }
         if (localStorage.pic != undefined) {
             profile_pic.style.setProperty('background-image', `url(${localStorage.pic})`);

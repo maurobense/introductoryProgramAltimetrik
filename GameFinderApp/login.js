@@ -34,7 +34,7 @@ function login(data) {
 
 
     if (jwt_decode(data.accessToken).sub == data.user.id) {
-        key = "fed8a0f56e2446908622753eff336b7a";
+        key = "65d3eda8b5d146f8ad996dc4be862b8e";
         myForm.reset();
         login_screen.style.display = 'none';
         game_finder.style.display = 'block';

@@ -82,6 +82,9 @@ function log_out() {
     profile.style.display = 'none';
     bar.style.display = 'none';
     initials.innerHTML = '';
+    display_menu();
+    bar.style.display = 'none';
+    nav.style.display = 'block';
 }
 function bodyInjection() {
 
@@ -212,8 +215,8 @@ function one() {
 function go_modal(game) {
     if (game != null) {
         let modal = document.getElementById('mod');
-        modal.addEventListener('click', function(e){
-            if (!e.target.closest('.modal')){
+        modal.addEventListener('click', function (e) {
+            if (!e.target.closest('.modal') || e.target.closest('.close')) {
                 close_modal();
             }
         })
@@ -221,34 +224,34 @@ function go_modal(game) {
         let platforms = '';
         let publishers = '';
         let developers = '';
-        let movie = ()=>{
-            if(game.movie != undefined) {
+        let movie = () => {
+            if (game.movie != undefined) {
                 return ` <video controls>
                 <source src="${game.movie}"
                     type="video/mp4">
             </video>`;
-            }else{
+            } else {
                 return `<div class="no-trailer"><p >No trailer available</p></div>`
             }
         }
-        for(let i = 0; i < game.parent_platforms.length; i++){
-            if(i == game.parent_platforms.length -1){
+        for (let i = 0; i < game.parent_platforms.length; i++) {
+            if (i == game.parent_platforms.length - 1) {
                 platforms += game.parent_platforms[i].platform.name;
-            }else{
+            } else {
                 platforms += `${game.parent_platforms[i].platform.name}, `;
             }
         }
-        for(let i = 0; i < game.publishers.length; i++){
-            if(i == game.publishers.length -1){
+        for (let i = 0; i < game.publishers.length; i++) {
+            if (i == game.publishers.length - 1) {
                 publishers += game.publishers[i].name;
-            }else{
+            } else {
                 publishers += `${game.publishers[i].name}, `;
             }
         }
-        for(let i = 0; i < game.developers.length; i++){
-            if(i == game.developers.length -1){
+        for (let i = 0; i < game.developers.length; i++) {
+            if (i == game.developers.length - 1) {
                 developers += game.developers[i].name;
-            }else{
+            } else {
                 developers += `${game.developers[i].name}, `;
             }
         }
@@ -259,8 +262,13 @@ function go_modal(game) {
         modal.style.display = 'block';
         modal.innerHTML += ` 
     <div class="modal-back">
+        <div>
         <img class="modal-pic" src="${game.background_image}">
+        </div>
         <div class="modal">
+        <span class="close"><svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path fill-rule="evenodd" clip-rule="evenodd" d="M10.5856 10.5865C10.9606 10.2115 11.4692 10.0009 11.9996 10.0009C12.5299 10.0009 13.0385 10.2115 13.4136 10.5865L23.9996 21.173L34.5856 10.5865C34.7701 10.3955 34.9908 10.2431 35.2348 10.1383C35.4788 10.0334 35.7412 9.97827 36.0068 9.97597C36.2723 9.97366 36.5357 10.0243 36.7815 10.1248C37.0273 10.2254 37.2506 10.3739 37.4384 10.5617C37.6261 10.7495 37.7747 10.9728 37.8752 11.2186C37.9758 11.4644 38.0264 11.7278 38.0241 11.9934C38.0218 12.2589 37.9666 12.5214 37.8618 12.7654C37.757 13.0094 37.6046 13.2301 37.4136 13.4146L26.8276 24.0011L37.4136 34.5877C37.7779 34.9649 37.9795 35.4701 37.9749 35.9945C37.9704 36.5189 37.76 37.0206 37.3892 37.3914C37.0184 37.7623 36.5168 37.9726 35.9924 37.9772C35.468 37.9817 34.9628 37.7801 34.5856 37.4158L23.9996 26.8293L13.4136 37.4158C13.0364 37.7801 12.5312 37.9817 12.0068 37.9772C11.4824 37.9726 10.9808 37.7623 10.6099 37.3914C10.2391 37.0206 10.0288 36.5189 10.0242 35.9945C10.0197 35.4701 10.2213 34.9649 10.5856 34.5877L21.1716 24.0011L10.5856 13.4146C10.2106 13.0396 10 12.5309 10 12.0006C10 11.4702 10.2106 10.9616 10.5856 10.5865Z"/>
+                    </svg></span>
             <div class="div-cont">
                 <div class="modal-title">
                     <div class="icons">
@@ -308,15 +316,15 @@ function go_modal(game) {
                         </div>
                         <div>
                             <h5>Publisher</h5>
-                            <p>${publishers}</p>
+                            <p>${publishers !== "" ? publishers : `Unknown publishers`}</p>
                         </div>
                         <div>
                             <h5>Age rating</h5>
-                            <p>${game.esrb_rating?.name}</p>
+                            <p>${game.esrb_rating !== null ? game.esrb_rating.name : `Not rated`}</p>
                         </div>
                         <div>
                             <h5>Website</h5>
-                            <p>${game.website}</p>
+                            <p>${game.website !== "" ? game.website : `No website available`}</p>
                         </div>
                         <div class="socials">
                             <icon><svg width="28" height="26" viewBox="0 0 28 26" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -345,16 +353,16 @@ function go_modal(game) {
                         ${movie()}
                     </div>
                     <div class="photo1">
-                        <img src="https://media.rawg.io/media/screenshots/bc3/bc3709b0e2aab6e19380fbe4929bc8b8.jpg">
+                        <img src=${game.short_screenshots[1]?.image} alt="Nice image of ${game.name}">
                     </div>
                     <div class="photo2">
-                        <img src="https://media.rawg.io/media/screenshots/bc3/bc3709b0e2aab6e19380fbe4929bc8b8.jpg">
+                    <img src=${game.short_screenshots[2]?.image} alt="Nice image of ${game.name}">
                     </div>
                     <div class="photo3">
-                        <img src="https://media.rawg.io/media/screenshots/bc3/bc3709b0e2aab6e19380fbe4929bc8b8.jpg">
+                    <img src=${game.short_screenshots[3]?.image} alt="Nice image of ${game.name}">
                     </div>
                     <div class="photo4">
-                        <img src="https://media.rawg.io/media/screenshots/bc3/bc3709b0e2aab6e19380fbe4929bc8b8.jpg">
+                    <img src=${game.short_screenshots[4]?.image} alt="Nice image of ${game.name}">
                     </div>
                 </div>
 
@@ -368,4 +376,24 @@ function close_modal() {
     let modal = document.getElementById('mod');
     modal.innerHTML = '';
     modal.style.display = 'none';
+}
+let hamb = false;
+function display_menu() {
+    let show_hamb = document.getElementsByClassName('show-hamb');
+
+    if (!hamb) {
+        hamb = true;
+        bar.style.display = 'none';
+        profile.style.setProperty('opacity', '1');
+        for (let i = 0; i < show_hamb.length; i++) {
+            show_hamb[i].style.display = 'block'
+        }
+    }else{
+        hamb = false;
+        profile.style.setProperty('opacity', '0');
+        bar.style.display = 'block'
+        for (let i = 0; i < show_hamb.length; i++) {
+            show_hamb[i].style.display = 'none'
+        }
+    }
 }
