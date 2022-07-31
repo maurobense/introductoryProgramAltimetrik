@@ -1003,7 +1003,6 @@ h5{
     width: 362px;
     background: #FFFFFF;
     border-radius: 4px;    
-    display: none;
 }
 
 .searchbar p{
@@ -1104,7 +1103,8 @@ h5{
     display: none;
 }
 
-@media (max-width: 1400px) and (min-width: 322px) {
+@media (max-width: 1400px) {
+
     form {
         position: relative;
         margin: 3.55rem auto;
@@ -1302,7 +1302,80 @@ h5{
         right: 100px;
         margin-top: 20px;
     }
+    
 
+}
+@media (max-width: 750px){
+    .searchbar{
+        display: none;
+    }
+    .heading h1{
+        font-size: 28px;
+    }
+    .heading h4{
+        font-size: 14px;
+    }
+    .grid, .grid1{
+        grid-template-columns: none;
+    }
+    .card,.card1{
+        width: 288px;
+        height: 332px;
+    }
+    .wrapper, .wrapper1{
+        grid-template-columns: repeat(2,1fr);
+        grid-template-rows: repeat(2,0.5fr);
+    }
+    .one h3, .one1 h3{
+        height: 33px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+    .three p,.three1 p,.six p,.six1 p{
+        text-align: right;
+    }
+    .four, .four1{
+        grid-column: 1;
+        grid-row: 4;
+        text-align: left;
+    }
+    .four p span, .four1 p span{
+        margin-left: 0;
+        margin-right: 16px;
+    }
+    .four p, .four1 p{
+        text-align: left;
+    }
+
+
+
+    #toggle{
+        display: none;
+    }
+    #headerFinder div svg {
+        display: block;
+        width: 150px;
+        height: 30px;
+    }
+
+    #ham-cont{
+        width: 20px;
+        height: 20px;
+    }
+    #ham-cont svg{
+        width: 100% !important;
+        height: 100% !important;
+    }
+    #finder-logo{
+        width: 100%;
+    }
+    #finder-logo svg{
+        margin: 0 auto;
+    }
+    #darkMode{
+        display: none;
+    }
 }
 
 @keyframes bounce{
@@ -1316,3 +1389,4 @@ h5{
         transform: rotate(-15seg);
     }
 }
+

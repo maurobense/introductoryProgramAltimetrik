@@ -80,14 +80,10 @@ function log_out() {
     game_finder.style.display = 'none';
     login_screen.style.display = 'block';
     profile.style.display = 'none';
-    bar.style.display = 'none';
     initials.innerHTML = '';
     if(hamb){
-    display_menu();
+        bar.style.display = 'none';
     }
-    bar.style.display = 'none';
-
-    nav.style.display = 'block';
 }
 function bodyInjection() {
 
@@ -386,15 +382,15 @@ function display_menu() {
 
     if (!hamb) {
         hamb = true;
-        bar.style.display = 'none';
+        bar.style.opacity = '0';
         profile.style.setProperty('opacity', '1');
         for (let i = 0; i < show_hamb.length; i++) {
             show_hamb[i].style.display = 'block'
         }
     }else{
         hamb = false;
+        bar.style.opacity = '1';
         profile.style.setProperty('opacity', '0');
-        bar.style.display = 'block'
         for (let i = 0; i < show_hamb.length; i++) {
             show_hamb[i].style.display = 'none'
         }

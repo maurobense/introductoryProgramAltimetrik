@@ -51,7 +51,6 @@ function login(data) {
             profile_pic.style.setProperty('background', `#5F81FB`);
             initials.innerHTML = data.user.email.substring(0, 2).toUpperCase();
         }
-        bar.style.display = 'block';
         profile.style.display = 'block';
         login_injection();
         loadGames();
