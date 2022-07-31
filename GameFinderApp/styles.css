@@ -996,7 +996,7 @@ h5{
 
 .searchbar{
     position: fixed;
-    z-index: 4;
+    z-index: 5;
     left: 37.43%;
     top: 23px;
     padding: 10px 0px;
@@ -1071,7 +1071,7 @@ h5{
     height: 100vh;
     background: #15151584;
     position: fixed;
-    z-index: 3;
+    z-index: 4;
     display: none;
 }
 
@@ -1082,7 +1082,6 @@ h5{
     top: 23px;
     display: flex;
     align-items: center;
-    display: none;
 }
 #profile p{
     color: #FFFFFF;
