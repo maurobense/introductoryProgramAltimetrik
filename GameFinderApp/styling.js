@@ -82,8 +82,11 @@ function log_out() {
     profile.style.display = 'none';
     bar.style.display = 'none';
     initials.innerHTML = '';
+    if(hamb){
     display_menu();
+    }
     bar.style.display = 'none';
+
     nav.style.display = 'block';
 }
 function bodyInjection() {
@@ -395,5 +398,6 @@ function display_menu() {
         for (let i = 0; i < show_hamb.length; i++) {
             show_hamb[i].style.display = 'none'
         }
+        nav.style.display = 'none';
     }
 }
